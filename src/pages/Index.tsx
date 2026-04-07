@@ -1,16 +1,124 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Link } from "react-router-dom";
+import { BookOpen, Wrench, Target, MessageSquare, Zap, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const modules = [
+  {
+    title: "Módulo 1",
+    subtitle: "A Nova Era Profissional",
+    description: "Entenda por que dominar IA não é opcional — e como isso muda sua carreira.",
+    icon: BookOpen,
+    path: "/modulo-1",
+  },
+  {
+    title: "Módulo 2",
+    subtitle: "As Ferramentas",
+    description: "As ferramentas que os profissionais mais valorizados já dominam.",
+    icon: Wrench,
+    path: "/modulo-2",
+  },
+  {
+    title: "Módulo 3",
+    subtitle: "IA na Sua Área",
+    description: "Aplicações práticas para cada função profissional.",
+    icon: Target,
+    path: "/modulo-3",
+  },
+  {
+    title: "Módulo 4",
+    subtitle: "Prompts Prontos",
+    description: "20 prompts profissionais para copiar, colar e adaptar.",
+    icon: MessageSquare,
+    path: "/modulo-4",
+  },
+];
+
+export default function Index() {
+  const [visited, setVisited] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("virada-visited");
+    if (stored) setVisited(JSON.parse(stored));
+  }, []);
+
+  const progress = Math.round((visited.length / 5) * 100);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Progress bar */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-medium text-muted-foreground">Seu progresso</span>
+          <span className="text-sm font-semibold text-foreground">{progress}%</span>
+        </div>
+        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+          <div
+            className="h-full bg-primary rounded-full transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Welcome */}
+      <div className="mb-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
+          Bem-vindo ao Virada IA.
+        </h1>
+        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+          Você está a alguns passos de se tornar o profissional mais valioso da sua equipe.
+        </p>
+        <p className="mt-4 text-muted-foreground leading-relaxed max-w-2xl">
+          Comece pelo <strong className="text-foreground">Módulo 1</strong> para entender a revolução da IA no ambiente de trabalho. 
+          Avance pelos módulos no seu ritmo e finalize com o <strong className="text-foreground">Diagnóstico IA</strong> — 
+          seu plano personalizado para aplicar inteligência artificial na sua rotina.
+        </p>
+      </div>
+
+      {/* Module cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        {modules.map((mod) => (
+          <Link
+            key={mod.path}
+            to={mod.path}
+            className="group p-5 rounded-xl border border-border bg-card hover:shadow-md hover:border-primary/20 transition-all"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                <mod.icon className="w-5 h-5 text-accent-foreground" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
+                  {mod.title}
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">{mod.subtitle}</h3>
+                <p className="text-sm text-muted-foreground">{mod.description}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Diagnostic CTA */}
+      <Link
+        to="/diagnostico"
+        className="block p-6 sm:p-8 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg group"
+      >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="w-14 h-14 rounded-xl bg-primary-foreground/15 flex items-center justify-center shrink-0">
+            <Zap className="w-7 h-7" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-bold mb-1">Faça seu Diagnóstico IA</h3>
+            <p className="text-primary-foreground/80 text-sm">
+              Descubra exatamente como aplicar IA no seu trabalho — personalizado para você.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-primary-foreground text-primary px-5 py-2.5 rounded-lg font-semibold text-sm group-hover:shadow-md transition-shadow shrink-0">
+            Fazer meu diagnóstico agora
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </div>
+      </Link>
     </div>
   );
-};
-
-const Index = PlaceholderIndex;
-
-export default Index;
+}
