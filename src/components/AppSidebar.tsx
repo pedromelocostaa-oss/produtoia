@@ -64,8 +64,14 @@ export function AppSidebar() {
           >
             <item.icon className="w-4 h-4 shrink-0" />
             <span className="truncate flex-1">{item.title}</span>
-            {item.key && visited.includes(item.key) && (
-              <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0 opacity-60" />
+            {item.key && (
+              visited.includes(item.key) ? (
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              ) : (
+                <span className="text-[9px] font-bold text-muted-foreground/50 bg-muted px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
+                  pendente
+                </span>
+              )
             )}
           </Link>
         ))}
