@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   MessageSquare, Brain, Users, Terminal, Search, Laptop,
   Heart, MousePointerClick, Workflow, Globe, BookOpenCheck,
-  ArrowRight, Play, Lightbulb, ExternalLink,
+  ArrowRight, ArrowLeft, Play, Lightbulb, ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -181,11 +181,20 @@ export default function Module2() {
 
   const currentIdx = tools.findIndex((t) => t.id === activeToolId);
   const nextTool = currentIdx < tools.length - 1 ? tools[currentIdx + 1] : null;
+  const prevTool = currentIdx > 0 ? tools[currentIdx - 1] : null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Breadcrumb */}
+      <div className="mb-6 animate-fade-in">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Voltar ao início
+        </Link>
+      </div>
+
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Módulo 2</div>
         <h1 className="text-3xl font-bold text-foreground tracking-tight mb-3">As Ferramentas</h1>
         <p className="text-lg text-muted-foreground">
@@ -193,17 +202,27 @@ export default function Module2() {
         </p>
       </div>
 
+      {/* Tool counter */}
+      <div className="flex items-center justify-between mb-3 animate-fade-in" style={{ animationDelay: "80ms", opacity: 0 }}>
+        <span className="text-xs text-muted-foreground font-medium">{currentIdx + 1} de {tools.length} ferramentas</span>
+        <div className="flex gap-1">
+          {tools.map((_, i) => (
+            <div key={i} className={cn("w-2 h-2 rounded-full transition-all", i === currentIdx ? "bg-primary scale-125" : "bg-border")} />
+          ))}
+        </div>
+      </div>
+
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-border">
+      <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-border animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
         {tools.map((tool) => (
           <button
             key={tool.id}
             onClick={() => setActiveToolId(tool.id)}
             className={cn(
-              "px-3 py-1.5 rounded-lg text-xs font-medium transition-colors",
+              "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200",
               activeToolId === tool.id
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:text-foreground"
+                ? "bg-primary text-primary-foreground shadow-sm scale-105"
+                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
             )}
           >
             {tool.name}
@@ -212,7 +231,7 @@ export default function Module2() {
       </div>
 
       {/* Tool Content */}
-      <div key={activeTool.id}>
+      <div key={activeTool.id} className="animate-fade-in">
         {/* Tool header */}
         <div className="flex items-start gap-4 mb-8">
           <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0">
@@ -253,7 +272,7 @@ export default function Module2() {
           <h3 className="text-lg font-bold text-foreground mb-3">Como usar no trabalho</h3>
           <div className="grid gap-3">
             {activeTool.useCases.map((uc, i) => (
-              <div key={i} className="p-4 rounded-lg border border-border bg-card">
+              <div key={i} className="p-4 rounded-lg border border-border bg-card hover:border-primary/20 hover:shadow-sm transition-all">
                 <h4 className="font-semibold text-foreground text-sm mb-1">{uc.title}</h4>
                 <p className="text-sm text-muted-foreground">{uc.desc}</p>
               </div>
@@ -264,9 +283,9 @@ export default function Module2() {
         {/* Video */}
         <section className="mb-8">
           <h3 className="text-lg font-bold text-foreground mb-3">Vídeo recomendado</h3>
-          <div className="p-4 rounded-lg border border-border bg-card">
+          <div className="p-4 rounded-lg border border-border bg-card hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-4">
-              <div className="w-20 h-14 rounded-lg bg-muted flex items-center justify-center shrink-0">
+              <div className="w-20 h-14 rounded-lg bg-muted flex items-center justify-center shrink-0 group cursor-pointer hover:bg-muted/80 transition-colors">
                 <Play className="w-6 h-6 text-muted-foreground" />
               </div>
               <div className="flex-1 min-w-0">
@@ -295,24 +314,47 @@ export default function Module2() {
           </div>
         </section>
 
-        {/* Next tool */}
-        {nextTool ? (
-          <button
-            onClick={() => setActiveToolId(nextTool.id)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
-          >
-            Próxima ferramenta: {nextTool.name}
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        ) : (
-          <Link
-            to="/modulo-3"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
-          >
-            Próximo: Módulo 3 — IA na Sua Área
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        )}
+        {/* Navigation between tools */}
+        <div className="flex items-center justify-between">
+          {prevTool ? (
+            <button
+              onClick={() => setActiveToolId(prevTool.id)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {prevTool.name}
+            </button>
+          ) : (
+            <Link
+              to="/modulo-1"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Módulo 1
+            </Link>
+          )}
+
+          {nextTool ? (
+            <button
+              onClick={() => {
+                setActiveToolId(nextTool.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md transition-all"
+            >
+              {nextTool.name}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <Link
+              to="/modulo-3"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md transition-all"
+            >
+              Módulo 3 — IA na Sua Área
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

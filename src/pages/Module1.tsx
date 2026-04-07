@@ -7,24 +7,13 @@ import {
   TrendingUp,
   Clock,
   CheckSquare,
+  ArrowLeft,
 } from "lucide-react";
 
 const comparisons = [
-  {
-    task: "Proposta Comercial",
-    before: "2-4 horas manual",
-    after: "10 minutos com IA",
-  },
-  {
-    task: "Onboarding de clientes",
-    before: "Artesanal e inconsistente",
-    after: "Padronizado e automático",
-  },
-  {
-    task: "Atendimento",
-    before: "Reativo, 4-8h de resposta",
-    after: "Proativo, classificação automática",
-  },
+  { task: "Proposta Comercial", before: "2-4 horas manual", after: "10 minutos com IA" },
+  { task: "Onboarding de clientes", before: "Artesanal e inconsistente", after: "Padronizado e automático" },
+  { task: "Atendimento", before: "Reativo, 4-8h de resposta", after: "Proativo, classificação automática" },
 ];
 
 const metrics = [
@@ -54,7 +43,10 @@ const checklist = [
 ];
 
 export default function Module1() {
-  const [checked, setChecked] = useState<boolean[]>(new Array(checklist.length).fill(false));
+  const [checked, setChecked] = useState<boolean[]>(() => {
+    const stored = localStorage.getItem("virada-checklist-1");
+    return stored ? JSON.parse(stored) : new Array(checklist.length).fill(false);
+  });
 
   useEffect(() => {
     const stored = localStorage.getItem("virada-visited");
@@ -69,14 +61,25 @@ export default function Module1() {
     setChecked((prev) => {
       const next = [...prev];
       next[i] = !next[i];
+      localStorage.setItem("virada-checklist-1", JSON.stringify(next));
       return next;
     });
   };
 
+  const checkedCount = checked.filter(Boolean).length;
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Breadcrumb */}
+      <div className="mb-6 animate-fade-in">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Voltar ao início
+        </Link>
+      </div>
+
       {/* Header */}
-      <div className="mb-10">
+      <div className="mb-10 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Módulo 1</div>
         <h1 className="text-3xl font-bold text-foreground tracking-tight mb-3">A Nova Era Profissional</h1>
         <p className="text-lg text-muted-foreground">
@@ -85,21 +88,21 @@ export default function Module1() {
       </div>
 
       {/* 1.1 */}
-      <section className="mb-12">
+      <section className="mb-12 animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
         <h2 className="text-xl font-bold text-foreground mb-4">1.1 — De Digital-First para AI-First</h2>
         <p className="text-muted-foreground leading-relaxed mb-4">
-          As empresas mais competitivas do mundo já mudaram a pergunta fundamental. A primeira pergunta ao 
+          As empresas mais competitivas do mundo já mudaram a pergunta fundamental. A primeira pergunta ao
           enfrentar qualquer desafio não é mais <em>"quem vai fazer isso?"</em> mas sim <strong className="text-foreground">"como a IA pode resolver 80% disso agora?"</strong>.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          Essa mentalidade inverte a lógica de alocação de recursos. Em vez de começar com horas humanas, 
-          você começa com inteligência artificial — e usa pessoas para os 20% que realmente precisam de 
+          Essa mentalidade inverte a lógica de alocação de recursos. Em vez de começar com horas humanas,
+          você começa com inteligência artificial — e usa pessoas para os 20% que realmente precisam de
           julgamento humano, criatividade e relacionamento.
         </p>
       </section>
 
       {/* 1.2 */}
-      <section className="mb-12">
+      <section className="mb-12 animate-fade-in" style={{ animationDelay: "150ms", opacity: 0 }}>
         <h2 className="text-xl font-bold text-foreground mb-4">1.2 — Empresa Tradicional vs AI-First</h2>
         <div className="rounded-xl border border-border overflow-hidden">
           <div className="grid grid-cols-3 bg-muted text-sm font-semibold text-foreground">
@@ -108,7 +111,7 @@ export default function Module1() {
             <div className="p-3 sm:p-4">AI-First</div>
           </div>
           {comparisons.map((c, i) => (
-            <div key={i} className="grid grid-cols-3 border-t border-border text-sm">
+            <div key={i} className="grid grid-cols-3 border-t border-border text-sm group hover:bg-muted/50 transition-colors">
               <div className="p-3 sm:p-4 font-medium text-foreground">{c.task}</div>
               <div className="p-3 sm:p-4 text-muted-foreground">{c.before}</div>
               <div className="p-3 sm:p-4 text-primary font-medium">{c.after}</div>
@@ -118,11 +121,11 @@ export default function Module1() {
       </section>
 
       {/* 1.3 */}
-      <section className="mb-12">
+      <section className="mb-12 animate-fade-in" style={{ animationDelay: "200ms", opacity: 0 }}>
         <h2 className="text-xl font-bold text-foreground mb-4">1.3 — Resultados Reais</h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {metrics.map((m, i) => (
-            <div key={i} className="p-4 rounded-xl bg-surface border border-border text-center">
+            <div key={i} className="p-4 rounded-xl bg-surface border border-border text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
               <m.icon className="w-5 h-5 text-primary mx-auto mb-2" />
               <div className="text-2xl font-bold text-foreground mb-1">{m.value}</div>
               <div className="text-xs text-muted-foreground">{m.label}</div>
@@ -132,11 +135,11 @@ export default function Module1() {
       </section>
 
       {/* 1.4 */}
-      <section className="mb-12">
+      <section className="mb-12 animate-fade-in" style={{ animationDelay: "250ms", opacity: 0 }}>
         <h2 className="text-xl font-bold text-foreground mb-4">1.4 — Erros Comuns ao Usar IA</h2>
         <div className="space-y-3">
           {errors.map((e, i) => (
-            <div key={i} className="flex gap-3 p-4 rounded-lg border border-border bg-card">
+            <div key={i} className="flex gap-3 p-4 rounded-lg border border-border bg-card hover:border-destructive/20 transition-colors">
               <AlertTriangle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-semibold text-foreground text-sm mb-1">{e.title}</h3>
@@ -148,21 +151,33 @@ export default function Module1() {
       </section>
 
       {/* 1.5 */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-foreground mb-4">1.5 — Checklist Diário de IA</h2>
+      <section className="mb-12 animate-fade-in" style={{ animationDelay: "300ms", opacity: 0 }}>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-foreground">1.5 — Checklist Diário de IA</h2>
+          <span className="text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
+            {checkedCount}/{checklist.length}
+          </span>
+        </div>
         <div className="rounded-xl border border-border bg-card p-4 sm:p-6 space-y-3">
+          {/* Mini progress */}
+          <div className="w-full h-1 bg-muted rounded-full overflow-hidden mb-2">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-300"
+              style={{ width: `${(checkedCount / checklist.length) * 100}%` }}
+            />
+          </div>
           {checklist.map((item, i) => (
             <label
               key={i}
-              className="flex items-start gap-3 cursor-pointer group"
+              className="flex items-start gap-3 cursor-pointer group p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors"
               onClick={() => toggleCheck(i)}
             >
-              <div className={`w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                checked[i] ? "bg-primary border-primary" : "border-border group-hover:border-primary/50"
+              <div className={`w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                checked[i] ? "bg-primary border-primary scale-110" : "border-border group-hover:border-primary/50"
               }`}>
                 {checked[i] && <CheckSquare className="w-3.5 h-3.5 text-primary-foreground" />}
               </div>
-              <span className={`text-sm transition-colors ${
+              <span className={`text-sm transition-all duration-200 ${
                 checked[i] ? "text-muted-foreground line-through" : "text-foreground"
               }`}>
                 {item}
@@ -172,14 +187,23 @@ export default function Module1() {
         </div>
       </section>
 
-      {/* Next */}
-      <Link
-        to="/modulo-2"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
-      >
-        Próximo: Módulo 2 — As Ferramentas
-        <ArrowRight className="w-4 h-4" />
-      </Link>
+      {/* Navigation */}
+      <div className="flex items-center justify-between animate-fade-in" style={{ animationDelay: "350ms", opacity: 0 }}>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Início
+        </Link>
+        <Link
+          to="/modulo-2"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md transition-all"
+        >
+          Módulo 2 — As Ferramentas
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
     </div>
   );
 }

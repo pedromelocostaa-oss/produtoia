@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Copy, Check, ArrowRight } from "lucide-react";
+import { Copy, Check, ArrowRight, ArrowLeft, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Prompt {
@@ -11,14 +11,14 @@ interface Prompt {
 }
 
 const areaColors: Record<string, string> = {
-  Vendas: "bg-blue-100 text-blue-700",
-  CS: "bg-green-100 text-green-700",
-  Marketing: "bg-purple-100 text-purple-700",
-  Operações: "bg-orange-100 text-orange-700",
-  Jurídico: "bg-red-100 text-red-700",
-  Financeiro: "bg-yellow-100 text-yellow-700",
-  Desenvolvimento: "bg-cyan-100 text-cyan-700",
-  RH: "bg-pink-100 text-pink-700",
+  Vendas: "bg-primary/10 text-primary",
+  CS: "bg-emerald-500/10 text-emerald-600",
+  Marketing: "bg-violet-500/10 text-violet-600",
+  Operações: "bg-amber-500/10 text-amber-600",
+  Jurídico: "bg-destructive/10 text-destructive",
+  Financeiro: "bg-yellow-500/10 text-yellow-700",
+  Desenvolvimento: "bg-cyan-500/10 text-cyan-600",
+  RH: "bg-pink-500/10 text-pink-600",
 };
 
 const prompts: Prompt[] = [
@@ -48,6 +48,7 @@ const filterOptions = ["Todos", "Vendas", "CS", "Marketing", "Operações", "Jur
 
 export default function Module4() {
   const [filter, setFilter] = useState("Todos");
+  const [searchQuery, setSearchQuery] = useState("");
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   useEffect(() => {
@@ -59,7 +60,9 @@ export default function Module4() {
     }
   }, []);
 
-  const filtered = filter === "Todos" ? prompts : prompts.filter((p) => p.area === filter);
+  const filtered = prompts
+    .filter((p) => filter === "Todos" || p.area === filter)
+    .filter((p) => !searchQuery || p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.prompt.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const copyPrompt = async (text: string, idx: number) => {
     await navigator.clipboard.writeText(text);
@@ -69,8 +72,16 @@ export default function Module4() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Breadcrumb */}
+      <div className="mb-6 animate-fade-in">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Voltar ao início
+        </Link>
+      </div>
+
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Módulo 4</div>
         <h1 className="text-3xl font-bold text-foreground tracking-tight mb-3">Prompts Prontos</h1>
         <p className="text-lg text-muted-foreground">
@@ -78,17 +89,29 @@ export default function Module4() {
         </p>
       </div>
 
+      {/* Search */}
+      <div className="relative mb-4 animate-fade-in" style={{ animationDelay: "80ms", opacity: 0 }}>
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder="Buscar prompts..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-input bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
+        />
+      </div>
+
       {/* Filter */}
-      <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-border">
+      <div className="flex flex-wrap gap-2 mb-6 pb-4 border-b border-border animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
         {filterOptions.map((opt) => (
           <button
             key={opt}
             onClick={() => setFilter(opt)}
             className={cn(
-              "px-3 py-1.5 rounded-lg text-xs font-medium transition-colors",
+              "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200",
               filter === opt
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:text-foreground"
+                ? "bg-primary text-primary-foreground shadow-sm scale-105"
+                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
             )}
           >
             {opt}
@@ -96,10 +119,19 @@ export default function Module4() {
         ))}
       </div>
 
+      {/* Results count */}
+      <p className="text-xs text-muted-foreground mb-4">
+        {filtered.length} prompt{filtered.length !== 1 ? "s" : ""} encontrado{filtered.length !== 1 ? "s" : ""}
+      </p>
+
       {/* Prompts */}
       <div className="space-y-4">
         {filtered.map((p, i) => (
-          <div key={`${p.area}-${p.title}`} className="p-5 rounded-xl border border-border bg-card">
+          <div
+            key={`${p.area}-${p.title}`}
+            className="p-5 rounded-xl border border-border bg-card hover:border-primary/15 hover:shadow-sm transition-all duration-200 animate-fade-in"
+            style={{ animationDelay: `${150 + i * 40}ms`, opacity: 0 }}
+          >
             <div className="flex items-start justify-between gap-3 mb-3">
               <div>
                 <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider", areaColors[p.area] || "bg-muted text-muted-foreground")}>
@@ -107,31 +139,54 @@ export default function Module4() {
                 </span>
                 <h3 className="font-semibold text-foreground mt-2">{p.title}</h3>
               </div>
-            </div>
-            <div className="bg-surface rounded-lg p-4 mb-3 font-mono text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-              {p.prompt}
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-muted-foreground italic">💡 {p.tip}</p>
               <button
                 onClick={() => copyPrompt(p.prompt, i)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shrink-0"
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0",
+                  copiedIdx === i
+                    ? "bg-emerald-500/10 text-emerald-600"
+                    : "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-sm"
+                )}
               >
                 {copiedIdx === i ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                {copiedIdx === i ? "Copiado!" : "Copiar prompt"}
+                {copiedIdx === i ? "Copiado!" : "Copiar"}
               </button>
             </div>
+            <div className="bg-surface rounded-lg p-4 mb-3 font-mono text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap border border-border/50">
+              {p.prompt}
+            </div>
+            <p className="text-xs text-muted-foreground italic flex items-start gap-1.5">
+              <span className="shrink-0">💡</span>
+              {p.tip}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Next */}
-      <div className="mt-8">
+      {/* No results */}
+      {filtered.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Nenhum prompt encontrado para esta busca.</p>
+          <button onClick={() => { setFilter("Todos"); setSearchQuery(""); }} className="mt-2 text-sm text-primary hover:underline">
+            Limpar filtros
+          </button>
+        </div>
+      )}
+
+      {/* Navigation */}
+      <div className="mt-8 flex items-center justify-between">
+        <Link
+          to="/modulo-3"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Módulo 3
+        </Link>
         <Link
           to="/diagnostico"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md transition-all"
         >
-          Próximo: Diagnóstico IA
+          Diagnóstico IA
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

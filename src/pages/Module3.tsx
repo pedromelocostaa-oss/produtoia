@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   TrendingUp, Users, Megaphone, Settings, Scale, DollarSign,
-  UserCheck, Cpu, AlertTriangle, ArrowRight, CheckCircle2,
+  UserCheck, Cpu, AlertTriangle, ArrowRight, ArrowLeft, CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -130,10 +130,20 @@ export default function Module3() {
     }
   }, []);
 
+  const currentIdx = areas.findIndex((a) => a.id === activeAreaId);
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Breadcrumb */}
+      <div className="mb-6 animate-fade-in">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Voltar ao início
+        </Link>
+      </div>
+
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
         <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Módulo 3</div>
         <h1 className="text-3xl font-bold text-foreground tracking-tight mb-3">IA na Sua Área</h1>
         <p className="text-lg text-muted-foreground">
@@ -142,16 +152,16 @@ export default function Module3() {
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-border">
+      <div className="flex flex-wrap gap-2 mb-8 pb-4 border-b border-border animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
         {areas.map((area) => (
           <button
             key={area.id}
             onClick={() => setActiveAreaId(area.id)}
             className={cn(
-              "px-3 py-1.5 rounded-lg text-xs font-medium transition-colors",
+              "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200",
               activeAreaId === area.id
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:text-foreground"
+                ? "bg-primary text-primary-foreground shadow-sm scale-105"
+                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
             )}
           >
             {area.name}
@@ -160,7 +170,7 @@ export default function Module3() {
       </div>
 
       {/* Area Content */}
-      <div key={activeArea.id}>
+      <div key={activeArea.id} className="animate-fade-in">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shrink-0">
@@ -177,7 +187,7 @@ export default function Module3() {
           <h3 className="text-lg font-bold text-foreground mb-3">Gargalos atuais</h3>
           <div className="space-y-2">
             {activeArea.bottlenecks.map((b, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border bg-card">
+              <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border bg-card hover:border-destructive/20 transition-colors">
                 <AlertTriangle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
                 <span className="text-sm text-muted-foreground">{b}</span>
               </div>
@@ -217,7 +227,7 @@ export default function Module3() {
           <h3 className="text-lg font-bold text-foreground mb-3">3 automações práticas</h3>
           <div className="grid gap-3">
             {activeArea.automations.map((a, i) => (
-              <div key={i} className="p-4 rounded-lg border border-border bg-card">
+              <div key={i} className="p-4 rounded-lg border border-border bg-card hover:border-primary/20 hover:shadow-sm transition-all">
                 <h4 className="font-semibold text-foreground text-sm mb-1">{a.title}</h4>
                 <p className="text-sm text-muted-foreground">{a.desc}</p>
               </div>
@@ -238,13 +248,23 @@ export default function Module3() {
           </div>
         </section>
 
-        <Link
-          to="/modulo-4"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
-        >
-          Próximo: Módulo 4 — Prompts Prontos
-          <ArrowRight className="w-4 h-4" />
-        </Link>
+        {/* Navigation */}
+        <div className="flex items-center justify-between">
+          <Link
+            to="/modulo-2"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Módulo 2
+          </Link>
+          <Link
+            to="/modulo-4"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md transition-all"
+          >
+            Módulo 4 — Prompts Prontos
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
     </div>
   );
