@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   TrendingUp, Users, Megaphone, Settings, Scale, DollarSign,
-  UserCheck, Cpu, AlertTriangle, ArrowRight, ArrowLeft, CheckCircle2,
+  UserCheck, Cpu, AlertTriangle, ArrowRight, ArrowLeft, CheckCircle2, Share2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -168,6 +168,33 @@ export default function Module3() {
           </button>
         ))}
       </div>
+
+      {/* Social Media Banner — exibido quando marketing ou CS está selecionado */}
+      {(activeAreaId === "marketing" || activeAreaId === "cs") && (
+        <div className="mb-6 animate-fade-in">
+          <div className="p-5 rounded-xl border-2 border-primary/30 bg-gradient-to-r from-violet-50 to-sky-50">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <Share2 className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-foreground mb-1">
+                  Você trabalha com Social Media ou Marketing de Conteúdo?
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Preparamos um guia específico com as ferramentas certas para a sua rotina.
+                </p>
+                <Link
+                  to="/social-media"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all hover:shadow-sm"
+                >
+                  Ver guia para Social Media →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Area Content */}
       <div key={activeArea.id} className="animate-fade-in">
