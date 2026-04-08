@@ -477,6 +477,35 @@ export default function Module2() {
           </div>
         </section>
 
+        {/* Lovable referral card + CTA */}
+        {activeTool.id === "lovable" && (
+          <section className="mb-8">
+            <div className="p-5 rounded-xl border-2 border-primary/30 bg-primary/5">
+              <h4 className="text-base font-bold text-foreground mb-2">Acesse o Lovable pelo link abaixo</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Crie sua conta e ganhe créditos para começar a construir. Você não precisa saber programar — descreve o que quer em português e o Lovable constrói pra você.
+              </p>
+              <a
+                href="https://lovable.dev/invite/FBXCYRR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-primary hover:underline"
+              >
+                https://lovable.dev/invite/FBXCYRR
+              </a>
+            </div>
+            <a
+              href="https://lovable.dev/invite/FBXCYRR"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md hover:shadow-primary/20 transition-all"
+            >
+              Criar conta no Lovable
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </section>
+        )}
+
         {/* Exemplo real de uso */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
