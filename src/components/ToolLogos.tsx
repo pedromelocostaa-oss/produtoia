@@ -9,9 +9,9 @@ export function ChatGPTLogo({ className = "w-7 h-7" }: { className?: string }) {
 
 export function ClaudeLogo({ className = "w-7 h-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M15.31 3.67l-4.12 14.09a.627.627 0 01-1.2.01L4.44 5.53a.627.627 0 01.59-.86h3.04a.627.627 0 01.6.43l3.08 9.88 2.56-8.74a.627.627 0 01.6-.43h3.04a.627.627 0 01.59.86h-.23z" fill="#D97757"/>
-      <path d="M19.56 5.53l-5.55 12.23a.627.627 0 01-1.14.01l-.86-2.1 3.46-7.62a.627.627 0 01.6-.43h2.9a.627.627 0 01.59.86v.05z" fill="#D97757"/>
+    <svg viewBox="0 0 64 64" fill="none" className={className}>
+      <path d="M37.5 16.5L32 38.5l-5.5-22h-7L28 48h8l8.5-31.5h-7z" fill="#D97757"/>
+      <path d="M42.5 16.5L38 31l-2.5-5.5L39 16.5h3.5z" fill="#E8926A"/>
     </svg>
   );
 }
