@@ -53,7 +53,7 @@ export default function Diagnostic() {
           <div className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5">Área de atuação</label>
-              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" disabled>
+              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow">
                 <option>Selecione sua área</option>
                 <option>Vendas</option>
                 <option>Customer Success</option>
@@ -68,7 +68,7 @@ export default function Diagnostic() {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5">Setor da empresa</label>
-              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" disabled>
+              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow">
                 <option>Selecione o setor</option>
                 <option>Tecnologia / SaaS</option>
                 <option>Varejo / E-commerce</option>
@@ -83,7 +83,7 @@ export default function Diagnostic() {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5">Cargo</label>
-              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" disabled>
+              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow">
                 <option>Selecione seu cargo</option>
                 <option>Analista</option>
                 <option>Coordenador</option>
@@ -96,7 +96,7 @@ export default function Diagnostic() {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-1.5">Tamanho da empresa</label>
-              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow" disabled>
+              <select className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow">
                 <option>Selecione o tamanho</option>
                 <option>1-10 pessoas</option>
                 <option>11-50 pessoas</option>
@@ -111,20 +111,15 @@ export default function Diagnostic() {
               <textarea
                 className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground min-h-[120px] resize-y focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                 placeholder="Conte brevemente sobre suas principais atividades, ferramentas que usa e desafios do dia a dia..."
-                disabled
               />
             </div>
 
             <div className="pt-2">
               <button
-                disabled
-                className="w-full py-3 rounded-lg bg-primary/50 text-primary-foreground font-semibold text-sm cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
               >
                 <Zap className="w-4 h-4" />
                 Gerar meu diagnóstico
-                <span className="text-[10px] font-bold bg-primary-foreground/20 px-2 py-0.5 rounded-full uppercase tracking-wider ml-2">
-                  Em breve
-                </span>
               </button>
             </div>
           </div>
