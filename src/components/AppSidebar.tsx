@@ -10,7 +10,6 @@ import {
   X,
   CheckCircle2,
   Share2,
-  GraduationCap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
