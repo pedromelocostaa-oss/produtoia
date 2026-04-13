@@ -142,7 +142,7 @@ export default function Module1() {
           )}
         >
           <span className="block text-xs opacity-70 mb-0.5">Parte 1</span>
-          Introdução à IA
+          Conheça mais sobre IA
         </button>
         <button
           onClick={() => setStep(2)}
@@ -154,7 +154,7 @@ export default function Module1() {
           )}
         >
           <span className="block text-xs opacity-70 mb-0.5">Parte 2</span>
-          A Nova Era Profissional
+          Entenda mais da nova era profissional
         </button>
       </div>
 
