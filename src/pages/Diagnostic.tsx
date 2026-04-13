@@ -110,6 +110,15 @@ export default function Diagnostic() {
           } catch { /* ignore */ }
         }
       }
+
+      // Save diagnostic to database
+      if (fullText) {
+        supabase.from("diagnostics").insert({
+          area, setor, cargo, tamanho, descricao, resultado: fullText,
+        }).then(({ error: dbErr }) => {
+          if (dbErr) console.error("Failed to save diagnostic:", dbErr);
+        });
+      }
     } catch (e: any) {
       setError(e.message || "Erro ao gerar diagnóstico.");
     } finally {
