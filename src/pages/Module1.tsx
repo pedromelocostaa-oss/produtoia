@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   ArrowRight, ArrowLeft, AlertTriangle, TrendingDown, TrendingUp, Clock, CheckSquare,
