@@ -6,6 +6,7 @@ import {
   ArrowRight, ArrowLeft, ChevronDown, Zap, CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getToolLogo } from "@/components/ToolLogos";
 
 interface HowToStep {
   step: string;
@@ -421,7 +422,10 @@ export default function Module2() {
         {/* Tool header */}
         <div className="flex items-start gap-4 mb-8 p-5 rounded-2xl border border-border bg-card shadow-sm">
           <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center shrink-0">
-            <activeTool.icon className="w-7 h-7 text-accent-foreground" />
+            {(() => {
+              const Logo = getToolLogo(activeTool.id);
+              return Logo ? <Logo className="w-8 h-8" /> : <activeTool.icon className="w-7 h-7 text-accent-foreground" />;
+            })()}
           </div>
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
