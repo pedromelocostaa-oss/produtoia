@@ -10,6 +10,7 @@ import {
   X,
   CheckCircle2,
   Share2,
+  Lightbulb,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -20,6 +21,7 @@ const navItems = [
   { title: "Módulo 2 — As Ferramentas", path: "/modulo-2", icon: Wrench, key: "modulo-2" },
   { title: "Módulo 3 — IA na Sua Área", path: "/modulo-3", icon: Target, key: "modulo-3" },
   { title: "Módulo 4 — Prompts Prontos", path: "/modulo-4", icon: MessageSquare, key: "modulo-4" },
+  { title: "Dicas de Conteúdo", path: "/dicas-de-conteudo", icon: Lightbulb },
   { title: "Guia Social Media ✦", path: "/social-media", icon: Share2 },
 ];
 
@@ -93,25 +95,32 @@ export function AppSidebar() {
         </div>
       </div>
 
-      {/* Diagnostic CTA */}
+      {/* Diagnostic CTA — Prominent */}
       <div className="p-3 border-t border-border">
         <Link
           to="/diagnostico"
           onClick={() => setMobileOpen(false)}
           className={cn(
-            "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200",
-            "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            "flex items-center gap-3 px-4 py-4 rounded-xl text-sm font-bold transition-all duration-200 relative overflow-hidden",
+            "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5",
+            "ring-2 ring-primary/20"
           )}
         >
-          <Zap className="w-5 h-5 shrink-0" />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span>Diagnóstico IA</span>
-              <span className="text-[10px] font-bold bg-primary-foreground/20 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
-                Exclusivo
-              </span>
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/5 to-transparent animate-pulse" />
+          <div className="w-10 h-10 rounded-xl bg-primary-foreground/20 flex items-center justify-center shrink-0 relative">
+            <Zap className="w-5 h-5" />
           </div>
+          <div className="flex-1 min-w-0 relative">
+            <div className="flex items-center gap-2">
+              <span className="text-base">Diagnóstico IA</span>
+            </div>
+            <p className="text-[10px] text-primary-foreground/70 font-medium mt-0.5">
+              Seu plano personalizado de IA
+            </p>
+          </div>
+          <span className="text-[9px] font-bold bg-primary-foreground/25 px-2 py-1 rounded-full uppercase tracking-wider shrink-0 relative animate-pulse">
+            ★ Exclusivo
+          </span>
         </Link>
       </div>
     </div>

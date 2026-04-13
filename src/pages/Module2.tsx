@@ -6,6 +6,7 @@ import {
   ArrowRight, ArrowLeft, ChevronDown, Zap, CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getToolLogo } from "@/components/ToolLogos";
 
 interface HowToStep {
   step: string;
@@ -400,20 +401,24 @@ export default function Module2() {
         className="flex flex-wrap gap-1.5 mb-8 pb-6 border-b border-border animate-fade-in"
         style={{ animationDelay: "100ms", opacity: 0 }}
       >
-        {tools.map((tool) => (
-          <button
-            key={tool.id}
-            onClick={() => goToTool(tool.id)}
-            className={cn(
-              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
-              activeToolId === tool.id
-                ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
-                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
-            )}
-          >
-            {tool.name}
-          </button>
-        ))}
+        {tools.map((tool) => {
+          const Logo = getToolLogo(tool.id);
+          return (
+            <button
+              key={tool.id}
+              onClick={() => goToTool(tool.id)}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
+                activeToolId === tool.id
+                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
+                  : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+              )}
+            >
+              {Logo && <Logo className="w-3.5 h-3.5" />}
+              {tool.name}
+            </button>
+          );
+        })}
       </div>
 
       {/* Tool content — key triggers re-animation on change */}
@@ -421,7 +426,10 @@ export default function Module2() {
         {/* Tool header */}
         <div className="flex items-start gap-4 mb-8 p-5 rounded-2xl border border-border bg-card shadow-sm">
           <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center shrink-0">
-            <activeTool.icon className="w-7 h-7 text-accent-foreground" />
+            {(() => {
+              const Logo = getToolLogo(activeTool.id);
+              return Logo ? <Logo className="w-8 h-8" /> : <activeTool.icon className="w-7 h-7 text-accent-foreground" />;
+            })()}
           </div>
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
