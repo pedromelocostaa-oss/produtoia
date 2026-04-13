@@ -9,9 +9,9 @@ export function ChatGPTLogo({ className = "w-7 h-7" }: { className?: string }) {
 
 export function ClaudeLogo({ className = "w-7 h-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M15.31 3.67l-4.12 14.09a.627.627 0 01-1.2.01L4.44 5.53a.627.627 0 01.59-.86h3.04a.627.627 0 01.6.43l3.08 9.88 2.56-8.74a.627.627 0 01.6-.43h3.04a.627.627 0 01.59.86h-.23z" fill="#D97757"/>
-      <path d="M19.56 5.53l-5.55 12.23a.627.627 0 01-1.14.01l-.86-2.1 3.46-7.62a.627.627 0 01.6-.43h2.9a.627.627 0 01.59.86v.05z" fill="#D97757"/>
+    <svg viewBox="0 0 64 64" fill="none" className={className}>
+      <path d="M37.5 16.5L32 38.5l-5.5-22h-7L28 48h8l8.5-31.5h-7z" fill="#D97757"/>
+      <path d="M42.5 16.5L38 31l-2.5-5.5L39 16.5h3.5z" fill="#E8926A"/>
     </svg>
   );
 }
@@ -76,19 +76,21 @@ export function NotebookLMLogo({ className = "w-7 h-7" }: { className?: string }
 
 export function ClaudeCoworkLogo({ className = "w-7 h-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <circle cx="8" cy="10" r="3" fill="#D97757"/>
-      <circle cx="16" cy="10" r="3" fill="#D97757" opacity="0.7"/>
-      <path d="M4 19c0-2.21 1.79-4 4-4h8c2.21 0 4 1.79 4 4v1H4v-1z" fill="#D97757" opacity="0.5"/>
+    <svg viewBox="0 0 64 64" fill="none" className={className}>
+      <path d="M37.5 16.5L32 38.5l-5.5-22h-7L28 48h8l8.5-31.5h-7z" fill="#D97757" opacity="0.7"/>
+      <path d="M42.5 16.5L38 31l-2.5-5.5L39 16.5h3.5z" fill="#E8926A" opacity="0.7"/>
+      <circle cx="20" cy="20" r="4" fill="#D97757" opacity="0.5"/>
+      <circle cx="44" cy="20" r="4" fill="#D97757" opacity="0.5"/>
     </svg>
   );
 }
 
 export function ClaudeCodeLogo({ className = "w-7 h-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <rect x="3" y="3" width="18" height="18" rx="3" fill="#D97757" opacity="0.15"/>
-      <path d="M8 10l-3 2 3 2M16 10l3 2-3 2M13 8l-2 8" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <svg viewBox="0 0 64 64" fill="none" className={className}>
+      <rect x="6" y="6" width="52" height="52" rx="10" fill="#D97757" opacity="0.12"/>
+      <path d="M37.5 16.5L32 38.5l-5.5-22h-7L28 48h8l8.5-31.5h-7z" fill="#D97757"/>
+      <path d="M42.5 16.5L38 31l-2.5-5.5L39 16.5h3.5z" fill="#E8926A"/>
     </svg>
   );
 }
