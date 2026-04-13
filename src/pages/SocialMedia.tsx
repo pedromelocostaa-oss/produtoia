@@ -134,6 +134,44 @@ const tools: Tool[] = [
     callToAction:
       "Essa é a ferramenta que parece mais intimidadora — e é exatamente por isso que a maioria não usa. Mas se você descreve o que precisa em português, ele constrói. A única forma de acreditar nisso é testar. Abre o terminal e tenta.",
   },
+  {
+    id: "gemini-image",
+    icon: Zap,
+    iconColor: "text-amber-600",
+    iconBg: "bg-amber-100",
+    title: "Gemini — Geração e Edição de Imagens",
+    badge: "Gratuito",
+    whatIs:
+      "O Gemini do Google tem o melhor modelo de geração e edição de imagens disponível hoje. Ele entende o contexto da imagem e faz edições precisas: melhora iluminação, troca cores, remove fundos, ajusta qualidade — tudo a partir de uma instrução em português. Para social media, é a ferramenta mais poderosa que existe para criar e ajustar imagens sem precisar de Photoshop.",
+    whatYouDo: [
+      "Melhora a iluminação e qualidade de fotos que o cliente mandou com pouca luz ou resolução baixa",
+      "Troca a cor de roupas, objetos ou fundos em fotos de produto",
+      "Remove fundos e cria composições profissionais para posts",
+      "Gera imagens do zero a partir de descrições (ex: 'foto flat lay de café com notebook em mesa de madeira')",
+      "Cria variações de uma mesma imagem para testes A/B em anúncios",
+      "Ajusta fotos para manter a identidade visual do feed (filtros, tons, contraste)",
+    ],
+    howToStart: [
+      {
+        step: 1,
+        text: "Acesse gemini.google.com e faça login com sua conta Google (é gratuito)",
+      },
+      {
+        step: 2,
+        text: "Para editar uma imagem: faça upload da foto e escreva o que quer mudar. Ex: 'Melhore a iluminação dessa foto e aumente o contraste' ou 'Troque a cor da camiseta para azul marinho'",
+      },
+      {
+        step: 3,
+        text: "Para gerar uma imagem nova: descreva em detalhes o que você precisa. Ex: 'Crie uma foto profissional de um smoothie verde em um copo de vidro, com fundo clean e iluminação suave, estilo food photography'",
+      },
+    ],
+    requires:
+      "Conta Google (gratuita). O modelo de geração de imagens está disponível sem custo no Gemini.",
+    example:
+      "Um cliente mandou fotos dos produtos tiradas com celular, com iluminação péssima e fundo bagunçado. Antes eu gastava 30 minutos no Photoshop ajustando cada uma. Agora mando pro Gemini com 'Melhore a iluminação, deixe o fundo branco limpo e aumente a nitidez'. Em 10 segundos tenho a foto pronta para o post — e o resultado é melhor do que eu fazia manualmente.",
+    callToAction:
+      "Pega aquela foto problemática que você tem aí — aquela que o cliente mandou escura, torta ou com fundo feio. Sobe no Gemini e pede para ele arrumar. Você vai se surpreender com o resultado. Depois tenta gerar uma imagem do zero. Essa ferramenta muda completamente seu fluxo de criação visual.",
+  },
 ];
 
 function ToolCard({ tool }: { tool: Tool }) {
