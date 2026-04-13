@@ -11,6 +11,7 @@ import Module3 from "./pages/Module3";
 import Module4 from "./pages/Module4";
 import SocialMedia from "./pages/SocialMedia";
 import Diagnostic from "./pages/Diagnostic";
+import CourseIA from "./pages/CourseIA";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/modulo-4" element={<Module4 />} />
             <Route path="/social-media" element={<SocialMedia />} />
             <Route path="/diagnostico" element={<Diagnostic />} />
+            <Route path="/curso-ia" element={<CourseIA />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

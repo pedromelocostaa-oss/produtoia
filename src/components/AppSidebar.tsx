@@ -10,6 +10,7 @@ import {
   X,
   CheckCircle2,
   Share2,
+  GraduationCap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -21,6 +22,7 @@ const navItems = [
   { title: "Módulo 3 — IA na Sua Área", path: "/modulo-3", icon: Target, key: "modulo-3" },
   { title: "Módulo 4 — Prompts Prontos", path: "/modulo-4", icon: MessageSquare, key: "modulo-4" },
   { title: "Guia Social Media ✦", path: "/social-media", icon: Share2 },
+  { title: "Curso: Introdução à IA", path: "/curso-ia", icon: GraduationCap },
 ];
 
 export function AppSidebar() {
