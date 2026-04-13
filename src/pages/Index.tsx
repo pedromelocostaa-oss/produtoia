@@ -75,7 +75,7 @@ export default function Index() {
       {/* Welcome */}
       <div className="mb-10 animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
         <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
-          Bem-vindo ao Virada IA.
+          Bem-vindo ao Virada Profissional.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
           Você está a alguns passos de se tornar o profissional mais valioso da sua equipe.
