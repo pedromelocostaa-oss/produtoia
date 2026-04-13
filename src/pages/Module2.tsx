@@ -401,20 +401,24 @@ export default function Module2() {
         className="flex flex-wrap gap-1.5 mb-8 pb-6 border-b border-border animate-fade-in"
         style={{ animationDelay: "100ms", opacity: 0 }}
       >
-        {tools.map((tool) => (
-          <button
-            key={tool.id}
-            onClick={() => goToTool(tool.id)}
-            className={cn(
-              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
-              activeToolId === tool.id
-                ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
-                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
-            )}
-          >
-            {tool.name}
-          </button>
-        ))}
+        {tools.map((tool) => {
+          const Logo = getToolLogo(tool.id);
+          return (
+            <button
+              key={tool.id}
+              onClick={() => goToTool(tool.id)}
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
+                activeToolId === tool.id
+                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
+                  : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+              )}
+            >
+              {Logo && <Logo className="w-3.5 h-3.5" />}
+              {tool.name}
+            </button>
+          );
+        })}
       </div>
 
       {/* Tool content — key triggers re-animation on change */}
