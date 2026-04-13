@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   ArrowRight, ArrowLeft, AlertTriangle, TrendingDown, TrendingUp, Clock, CheckSquare,
@@ -65,7 +65,18 @@ const checklist = [
    ═══════════════════════════════════════════ */
 
 export default function Module1() {
-  const [step, setStep] = useState<1 | 2>(1);
+  const [searchParams] = useSearchParams();
+  const [step, setStep] = useState<1 | 2>(() => {
+    const s = searchParams.get("step");
+    return s === "2" ? 2 : 1;
+  });
+
+  // Sync with URL changes
+  useEffect(() => {
+    const s = searchParams.get("step");
+    if (s === "2") setStep(2);
+    else if (s === "1") setStep(1);
+  }, [searchParams]);
   const [introIndex, setIntroIndex] = useState(0);
   const [introCompleted, setIntroCompleted] = useState<Set<number>>(() => {
     const stored = localStorage.getItem("virada-intro-completed");

@@ -11,13 +11,33 @@ import {
   CheckCircle2,
   Share2,
   Lightbulb,
+  ChevronDown,
+  Brain,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 
-const navItems = [
+interface NavItem {
+  title: string;
+  path: string;
+  icon: React.ElementType;
+  key?: string;
+  children?: { title: string; path: string; icon: React.ElementType }[];
+}
+
+const navItems: NavItem[] = [
   { title: "Início", path: "/", icon: Home },
-  { title: "Módulo 1 — A Nova Era Profissional", path: "/modulo-1", icon: BookOpen, key: "modulo-1" },
+  {
+    title: "Módulo 1 — A Nova Era Profissional",
+    path: "/modulo-1",
+    icon: BookOpen,
+    key: "modulo-1",
+    children: [
+      { title: "Conheça mais sobre IA", path: "/modulo-1?step=1", icon: Brain },
+      { title: "A nova era profissional", path: "/modulo-1?step=2", icon: TrendingUp },
+    ],
+  },
   { title: "Módulo 2 — As Ferramentas", path: "/modulo-2", icon: Wrench, key: "modulo-2" },
   { title: "Módulo 3 — IA na Sua Área", path: "/modulo-3", icon: Target, key: "modulo-3" },
   { title: "Módulo 4 — Prompts Prontos", path: "/modulo-4", icon: MessageSquare, key: "modulo-4" },
@@ -29,15 +49,33 @@ export function AppSidebar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visited, setVisited] = useState<string[]>([]);
+  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const stored = localStorage.getItem("virada-visited");
     if (stored) setVisited(JSON.parse(stored));
   }, [location.pathname]);
 
+  // Auto-expand Module 1 when on its page
+  useEffect(() => {
+    if (location.pathname.startsWith("/modulo-1")) {
+      setExpandedModules((prev) => new Set(prev).add("/modulo-1"));
+    }
+  }, [location.pathname]);
+
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/";
+    if (path.includes("?")) return location.pathname + location.search === path;
     return location.pathname.startsWith(path);
+  };
+
+  const toggleExpand = (path: string) => {
+    setExpandedModules((prev) => {
+      const next = new Set(prev);
+      if (next.has(path)) next.delete(path);
+      else next.add(path);
+      return next;
+    });
   };
 
   const sidebarContent = (
@@ -55,29 +93,65 @@ export function AppSidebar() {
       {/* Nav Items */}
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            onClick={() => setMobileOpen(false)}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-              isActive(item.path)
-                ? "bg-accent text-accent-foreground border-l-[3px] border-primary shadow-sm"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground hover:translate-x-0.5"
+          <div key={item.path}>
+            <div className="flex items-center">
+              <Link
+                to={item.children ? item.path.split("?")[0] : item.path}
+                onClick={() => {
+                  setMobileOpen(false);
+                  if (item.children) toggleExpand(item.path);
+                }}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 flex-1",
+                  isActive(item.path.split("?")[0])
+                    ? "bg-accent text-accent-foreground border-l-[3px] border-primary shadow-sm"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground hover:translate-x-0.5"
+                )}
+              >
+                <item.icon className="w-4 h-4 shrink-0" />
+                <span className="truncate flex-1">{item.title}</span>
+                {item.children && (
+                  <ChevronDown
+                    className={cn(
+                      "w-3.5 h-3.5 shrink-0 transition-transform duration-200",
+                      expandedModules.has(item.path) && "rotate-180"
+                    )}
+                  />
+                )}
+                {!item.children && item.key && (
+                  visited.includes(item.key) ? (
+                    <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                  ) : (
+                    <span className="text-[9px] font-bold text-muted-foreground/50 bg-muted px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
+                      pendente
+                    </span>
+                  )
+                )}
+              </Link>
+            </div>
+
+            {/* Sub-items */}
+            {item.children && expandedModules.has(item.path) && (
+              <div className="ml-6 mt-1 space-y-0.5 border-l-2 border-border pl-3">
+                {item.children.map((child) => (
+                  <Link
+                    key={child.path}
+                    to={child.path}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "flex items-center gap-2 px-2.5 py-2 rounded-md text-xs font-medium transition-all duration-200",
+                      isActive(child.path)
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    )}
+                  >
+                    <child.icon className="w-3.5 h-3.5 shrink-0" />
+                    <span className="truncate">{child.title}</span>
+                  </Link>
+                ))}
+              </div>
             )}
-          >
-            <item.icon className="w-4 h-4 shrink-0" />
-            <span className="truncate flex-1">{item.title}</span>
-            {item.key && (
-              visited.includes(item.key) ? (
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              ) : (
-                <span className="text-[9px] font-bold text-muted-foreground/50 bg-muted px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
-                  pendente
-                </span>
-              )
-            )}
-          </Link>
+          </div>
         ))}
       </nav>
 
@@ -95,32 +169,25 @@ export function AppSidebar() {
         </div>
       </div>
 
-      {/* Diagnostic CTA — Prominent */}
+      {/* Diagnostic CTA */}
       <div className="p-3 border-t border-border">
         <Link
           to="/diagnostico"
           onClick={() => setMobileOpen(false)}
           className={cn(
-            "flex items-center gap-3 px-4 py-4 rounded-xl text-sm font-bold transition-all duration-200 relative overflow-hidden",
-            "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5",
-            "ring-2 ring-primary/20"
+            "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200",
+            "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-0.5"
           )}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/5 to-transparent animate-pulse" />
-          <div className="w-10 h-10 rounded-xl bg-primary-foreground/20 flex items-center justify-center shrink-0 relative">
-            <Zap className="w-5 h-5" />
-          </div>
-          <div className="flex-1 min-w-0 relative">
+          <Zap className="w-5 h-5 shrink-0" />
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-base">Diagnóstico IA</span>
+              <span>Diagnóstico IA</span>
+              <span className="text-[10px] font-bold bg-primary-foreground/20 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                Exclusivo
+              </span>
             </div>
-            <p className="text-[10px] text-primary-foreground/70 font-medium mt-0.5">
-              Seu plano personalizado de IA
-            </p>
           </div>
-          <span className="text-[9px] font-bold bg-primary-foreground/25 px-2 py-1 rounded-full uppercase tracking-wider shrink-0 relative animate-pulse">
-            ★ Exclusivo
-          </span>
         </Link>
       </div>
     </div>
