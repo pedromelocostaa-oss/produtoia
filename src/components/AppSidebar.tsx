@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Brain,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -95,6 +96,20 @@ export function AppSidebar() {
 
         {/* Módulo 4 */}
         <NavItem icon={MessageSquare} label="Módulo 4 — Prompts Prontos" path="/modulo-4" active={isActive("/modulo-4")} onClick={close} badge={<StatusBadge visited={visited.includes("modulo-4")} />} />
+
+        {/* Comunidade */}
+        <NavItem
+          icon={Users}
+          label="Comunidade"
+          path="/comunidade"
+          active={isActive("/comunidade")}
+          onClick={close}
+          badge={
+            <span className="text-[9px] font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
+              Novo
+            </span>
+          }
+        />
 
         <div className="h-px bg-border my-2" />
 

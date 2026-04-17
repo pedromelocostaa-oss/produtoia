@@ -12,6 +12,7 @@ import Module4 from "./pages/Module4";
 import SocialMedia from "./pages/SocialMedia";
 import Diagnostic from "./pages/Diagnostic";
 import ContentTips from "./pages/ContentTips";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/social-media" element={<SocialMedia />} />
             <Route path="/diagnostico" element={<Diagnostic />} />
             <Route path="/dicas-de-conteudo" element={<ContentTips />} />
+            <Route path="/comunidade" element={<Community />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

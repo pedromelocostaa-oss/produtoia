@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, Wrench, Target, MessageSquare, Zap, ArrowRight, CheckCircle2 } from "lucide-react";
+import { BookOpen, Wrench, Target, MessageSquare, Zap, ArrowRight, CheckCircle2, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const modules = [
@@ -137,6 +137,27 @@ export default function Index() {
           );
         })}
       </div>
+
+      {/* Community CTA */}
+      <Link
+        to="/comunidade"
+        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 mb-4 rounded-xl border border-border bg-card hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5 transition-all group animate-fade-in"
+        style={{ animationDelay: "530ms", opacity: 0 }}
+      >
+        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+          <Users className="w-6 h-6 text-primary" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-semibold text-foreground mb-1">Veja o que outros profissionais já construíram</h3>
+          <p className="text-sm text-muted-foreground">
+            Inspire-se com cases reais de quem já colocou a IA para trabalhar
+          </p>
+        </div>
+        <div className="flex items-center gap-1 text-sm font-semibold text-primary group-hover:gap-2 transition-all shrink-0">
+          Acessar a Comunidade →
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+        </div>
+      </Link>
 
       {/* Diagnostic CTA */}
       <Link
