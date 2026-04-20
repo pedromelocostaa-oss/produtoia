@@ -15,6 +15,7 @@ import {
   Brain,
   TrendingUp,
   Users,
+  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -97,6 +98,20 @@ export function AppSidebar() {
         {/* Módulo 4 */}
         <NavItem icon={MessageSquare} label="Módulo 4 — Prompts Prontos" path="/modulo-4" active={isActive("/modulo-4")} onClick={close} badge={<StatusBadge visited={visited.includes("modulo-4")} />} />
 
+        {/* Qual IA Usar? — Comparison page */}
+        <NavItem
+          icon={BarChart3}
+          label="Qual IA Usar?"
+          path="/comparativo"
+          active={isActive("/comparativo")}
+          onClick={close}
+          badge={
+            <span className="text-[9px] font-bold bg-purple-600 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
+              Novo
+            </span>
+          }
+        />
+
         {/* Comunidade */}
         <NavItem
           icon={Users}
@@ -125,7 +140,7 @@ export function AppSidebar() {
           <span className="font-bold tabular-nums">{visited.length}/4</span>
         </div>
         <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-          <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
+          <div className="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
         </div>
       </div>
 

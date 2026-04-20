@@ -9,6 +9,7 @@ import Module1 from "./pages/Module1";
 import Module2 from "./pages/Module2";
 import Module3 from "./pages/Module3";
 import Module4 from "./pages/Module4";
+import Comparison from "./pages/Comparison";
 import SocialMedia from "./pages/SocialMedia";
 import Diagnostic from "./pages/Diagnostic";
 import ContentTips from "./pages/ContentTips";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/modulo-2" element={<Module2 />} />
             <Route path="/modulo-3" element={<Module3 />} />
             <Route path="/modulo-4" element={<Module4 />} />
+            <Route path="/comparativo" element={<Comparison />} />
             <Route path="/social-media" element={<SocialMedia />} />
             <Route path="/diagnostico" element={<Diagnostic />} />
             <Route path="/dicas-de-conteudo" element={<ContentTips />} />

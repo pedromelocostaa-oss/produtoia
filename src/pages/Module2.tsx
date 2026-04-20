@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   MessageSquare, Brain, Users, Terminal, Search, Laptop,
   Heart, MousePointerClick, Workflow, Globe, BookOpenCheck,
-  ArrowRight, ArrowLeft, ChevronDown, Zap, CheckCircle2,
+  ArrowRight, ArrowLeft, ChevronDown, Zap, CheckCircle2, Mic,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getToolLogo } from "@/components/ToolLogos";
@@ -273,6 +273,28 @@ const tools: Tool[] = [
     realExample: "Imagina que você precisa revisar 5 atas de reunião para preparar uma atualização sobre o andamento de um projeto. Normalmente você leria as 5 uma por uma para juntar as informações. Com o NotebookLM, você sobe todas as 5 e pergunta: 'Quais decisões foram tomadas? O que está atrasado? Quem ficou responsável pelo quê?' Em 2 minutos você tem o resumo completo de tudo — com referência para cada ata.",
     tip: "Suba os 3 documentos mais importantes do seu trabalho atual e faça a pergunta que você mais evita responder por preguiça de pesquisar. Você vai se surpreender com a qualidade e a precisão da resposta.",
   },
+  {
+    id: "transcricao",
+    name: "Transcrição de Reuniões",
+    icon: Mic,
+    tag: "Transcrição",
+    tagline: "Pare de tomar notas — deixa a IA registrar tudo",
+    what: "Nunca mais perca uma decisão importante. Ferramentas como tl;dv, Fireflies.ai e Otter.ai entram nas suas reuniões como participantes silenciosos, transcrevem cada palavra em tempo real, geram resumos automáticos com os pontos principais e criam listas de ações com responsáveis — tudo sem você precisar tomar uma nota sequer.",
+    canDo: [
+      "Gravar e transcrever reuniões do Google Meet, Zoom e Teams automaticamente",
+      "Gerar resumo executivo com decisões e próximos passos ao final de cada reunião",
+      "Buscar qualquer trecho de uma reunião antiga por palavra-chave",
+      "Compartilhar o resumo da reunião com quem não pôde participar",
+      "Criar itens de ação com responsáveis a partir do que foi discutido",
+    ],
+    howToStart: [
+      { step: "1", action: "Escolha uma ferramenta: tl;dv (tldv.io) para resumos automáticos, Fireflies.ai para arquivo pesquisável, ou Otter.ai para transcrição em tempo real" },
+      { step: "2", action: "Crie sua conta gratuita e conecte com o Google Calendar — ele vai entrar automaticamente nas suas próximas reuniões" },
+      { step: "3", action: "Na próxima reunião, o bot entra como participante, grava tudo e você recebe o resumo por e-mail quando ela terminar" },
+    ],
+    realExample: "Imagina que você tem 4 reuniões por dia e no final do expediente precisa lembrar de tudo que foi decidido para atualizar o time. Com o tl;dv ativo, cada reunião gera automaticamente um resumo com os highlights, as decisões tomadas e os itens de ação com responsáveis. Você recebe por e-mail antes de a reunião terminar. Nunca mais você vai sair de uma call sem saber o que ficou combinado.",
+    tip: "Ative o tl;dv hoje e configure para entrar automaticamente em todas as suas reuniões do Google Meet. Na primeira semana você vai economizar horas de anotações e follow-ups. Use o tier gratuito — ele já é suficiente para quem tem até 10 reuniões por mês.",
+  },
 ];
 
 export default function Module2() {
@@ -327,8 +349,10 @@ export default function Module2() {
 
       {/* Header */}
       <div className="mb-8 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
-        <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Módulo 2</div>
-        <h1 className="text-3xl font-bold text-foreground tracking-tight mb-3">As Ferramentas</h1>
+        <div className="text-xs font-semibold text-violet-600 uppercase tracking-wider mb-2">Módulo 2</div>
+        <h1 className="text-3xl font-bold tracking-tight mb-3 bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">
+          As Ferramentas
+        </h1>
         <p className="text-lg text-muted-foreground">
           As ferramentas que os profissionais mais valorizados já dominam — e como usar cada uma no seu trabalho.
         </p>
@@ -348,7 +372,7 @@ export default function Module2() {
           </div>
           <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-500"
+              className="h-full bg-violet-500 rounded-full transition-all duration-500"
               style={{ width: `${((currentIdx + 1) / tools.length) * 100}%` }}
             />
           </div>
@@ -376,17 +400,17 @@ export default function Module2() {
                     className={cn(
                       "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-left transition-colors",
                       tool.id === activeToolId
-                        ? "bg-primary text-primary-foreground"
+                        ? "bg-violet-600 text-white"
                         : "text-foreground hover:bg-muted"
                     )}
                   >
                     <span className="text-[10px] text-muted-foreground w-4 shrink-0 font-mono">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <tool.icon className={cn("w-3.5 h-3.5 shrink-0", tool.id === activeToolId ? "text-primary-foreground" : "text-muted-foreground")} />
+                    <tool.icon className={cn("w-3.5 h-3.5 shrink-0", tool.id === activeToolId ? "text-white" : "text-muted-foreground")} />
                     <span className="font-medium truncate">{tool.name}</span>
                     {tool.id === activeToolId && (
-                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 ml-auto text-primary-foreground" />
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 ml-auto text-white" />
                     )}
                   </button>
                 ))}
@@ -410,7 +434,7 @@ export default function Module2() {
               className={cn(
                 "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
                 activeToolId === tool.id
-                  ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
+                  ? "bg-violet-600 text-white shadow-sm shadow-violet-200"
                   : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
               )}
             >
@@ -424,7 +448,7 @@ export default function Module2() {
       {/* Tool content — key triggers re-animation on change */}
       <div key={`${activeTool.id}-${animKey}`} className="animate-fade-in">
         {/* Tool header */}
-        <div className="flex items-start gap-4 mb-8 p-5 rounded-2xl border border-border bg-card shadow-sm">
+        <div className="flex items-start gap-4 mb-8 p-5 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
           <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center shrink-0">
             {(() => {
               const Logo = getToolLogo(activeTool.id);
@@ -434,7 +458,7 @@ export default function Module2() {
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h2 className="text-2xl font-bold text-foreground">{activeTool.name}</h2>
-              <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[10px] font-bold bg-violet-500/10 text-violet-600 px-2 py-0.5 rounded-full uppercase tracking-wider">
                 {activeTool.tag}
               </span>
             </div>
@@ -445,7 +469,7 @@ export default function Module2() {
         {/* O que é */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-xs text-primary font-bold">1</span>
+            <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">1</span>
             O que é
           </h3>
           <p className="text-muted-foreground leading-relaxed">{activeTool.what}</p>
@@ -454,13 +478,13 @@ export default function Module2() {
         {/* O que você pode fazer */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-xs text-primary font-bold">2</span>
+            <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">2</span>
             O que você pode fazer com ela
           </h3>
           <ul className="space-y-2">
             {activeTool.canDo.map((item, i) => (
               <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-violet-500 mt-0.5 shrink-0" />
                 <span>{item}</span>
               </li>
             ))}
@@ -470,13 +494,13 @@ export default function Module2() {
         {/* Como começar agora */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-xs text-primary font-bold">3</span>
+            <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">3</span>
             Como começar agora
           </h3>
           <div className="space-y-3">
             {activeTool.howToStart.map((s, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/20 hover:shadow-sm transition-all">
-                <span className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shrink-0">
+              <div key={i} className="flex items-start gap-4 p-4 rounded-xl border border-border bg-card hover:border-violet-500/20 hover:shadow-sm transition-all">
+                <span className="w-7 h-7 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
                   {s.step}
                 </span>
                 <p className="text-sm text-foreground leading-relaxed">{s.action}</p>
@@ -514,13 +538,65 @@ export default function Module2() {
           </section>
         )}
 
+        {/* Transcrição — three sub-tools breakdown */}
+        {activeTool.id === "transcricao" && (
+          <section className="mb-8">
+            <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">★</span>
+              As 3 ferramentas dessa categoria
+            </h3>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                {
+                  name: "tl;dv",
+                  url: "tldv.io",
+                  free: true,
+                  desc: "Grava, transcreve e resume reuniões do Google Meet e Zoom. Gera itens de ação automáticos e highlights com timestamp. Melhor para quem quer o resumo pronto sem esforço.",
+                },
+                {
+                  name: "Fireflies.ai",
+                  url: "fireflies.ai",
+                  free: true,
+                  desc: "Entra como bot nas reuniões, transcreve tudo e cria um arquivo pesquisável. Ideal para equipes que precisam rever o que foi dito semanas depois.",
+                },
+                {
+                  name: "Otter.ai",
+                  url: "otter.ai",
+                  free: true,
+                  desc: "Transcrição em tempo real sincronizada com o calendário. Ótimo para reuniões presenciais e quem quer acompanhar ao vivo o que está sendo dito.",
+                },
+              ].map((tool) => (
+                <div key={tool.name} className="p-4 rounded-xl border border-border bg-card hover:border-violet-500/20 hover:shadow-sm transition-all">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-bold text-foreground">{tool.name}</span>
+                    {tool.free && (
+                      <span className="text-[9px] font-bold bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                        Grátis
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-2">{tool.desc}</p>
+                  <a
+                    href={`https://${tool.url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-violet-600 font-semibold hover:underline"
+                  >
+                    {tool.url} →
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Exemplo real de uso */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-xs text-primary font-bold">4</span>
+            <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">4</span>
             Exemplo real de uso
           </h3>
-          <div className="relative p-5 rounded-xl bg-accent border-l-4 border-primary">
+          <div className="relative p-5 rounded-xl bg-accent border-l-4 border-violet-500">
             <p className="text-sm text-foreground leading-relaxed italic">{activeTool.realExample}</p>
           </div>
         </section>
@@ -528,29 +604,47 @@ export default function Module2() {
         {/* Dica rápida */}
         <section className="mb-8">
           <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-xs text-primary font-bold">+</span>
+            <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">+</span>
             Dica para o primeiro uso
           </h3>
-          <div className="p-4 rounded-xl border border-primary/20 bg-accent">
+          <div className="p-4 rounded-xl border border-violet-500/20 bg-accent">
             <p className="text-sm text-muted-foreground leading-relaxed">{activeTool.tip}</p>
           </div>
         </section>
 
         {/* "Só se aprende fazendo" block */}
         <section className="mb-10">
-          <div className="p-6 rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+          <div className="p-6 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-600 text-white shadow-lg shadow-violet-500/20">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-primary-foreground/15 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
                 <Zap className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="font-bold text-base mb-2">Você só aprende de verdade quando começar a usar.</h4>
-                <p className="text-primary-foreground/85 text-sm leading-relaxed">
-                  Estudar é o primeiro passo — mas é na prática, errando, tentando e ajustando, que a IA vira parte do seu trabalho. Não espere entender tudo antes de começar. <strong className="text-primary-foreground">Abra agora, teste, erre, melhore.</strong>
+                <p className="text-white/85 text-sm leading-relaxed">
+                  Estudar é o primeiro passo — mas é na prática, errando, tentando e ajustando, que a IA vira parte do seu trabalho. Não espere entender tudo antes de começar. <strong className="text-white">Abra agora, teste, erre, melhore.</strong>
                 </p>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* CTA to Comparison page */}
+        <section className="mb-10">
+          <Link
+            to="/comparativo"
+            className="flex items-center gap-4 p-5 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 hover:border-purple-300 transition-all group"
+          >
+            <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <Search className="w-5 h-5 text-purple-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-purple-600 mb-0.5 uppercase tracking-wider">Recurso extra</p>
+              <p className="text-sm font-semibold text-foreground">Não sabe qual ferramenta usar para cada tarefa?</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Veja o comparativo completo — Qual IA Usar?</p>
+            </div>
+            <ArrowRight className="w-4 h-4 text-purple-500 group-hover:translate-x-1 transition-transform shrink-0" />
+          </Link>
         </section>
 
         {/* Navigation between tools */}
@@ -577,7 +671,7 @@ export default function Module2() {
           {nextTool ? (
             <button
               onClick={() => goToTool(nextTool.id)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md hover:shadow-primary/20 hover:translate-x-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-violet-600 text-white font-semibold text-sm hover:bg-violet-700 hover:shadow-md hover:shadow-violet-500/20 hover:translate-x-0.5 transition-all"
             >
               <span className="hidden sm:inline">{nextTool.name}</span>
               <span className="sm:hidden">Próxima</span>
@@ -586,7 +680,7 @@ export default function Module2() {
           ) : (
             <Link
               to="/modulo-3"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 hover:shadow-md hover:shadow-primary/20 hover:translate-x-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-violet-600 text-white font-semibold text-sm hover:bg-violet-700 hover:shadow-md hover:shadow-violet-500/20 hover:translate-x-0.5 transition-all"
             >
               Módulo 3
               <ArrowRight className="w-4 h-4" />
