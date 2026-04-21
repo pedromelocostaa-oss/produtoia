@@ -4,6 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -60,6 +61,7 @@ const TOOL_COLORS: Record<string, string> = {
 /* ── Main Component ── */
 
 export default function Community() {
+  const { user } = useAuth();
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterTool, setFilterTool] = useState('Todos');
@@ -224,6 +226,8 @@ export default function Community() {
           setCreateOpen(false);
           fetchCases();
         }}
+        defaultName={user?.user_metadata?.full_name ?? ""}
+        defaultEmail={user?.email ?? ""}
       />
       {selectedCase && (
         <CaseDetailModal caseItem={selectedCase} onClose={() => setSelectedCase(null)} />
@@ -350,12 +354,16 @@ function CreateCaseModal({
   open,
   onClose,
   onSuccess,
+  defaultName = "",
+  defaultEmail = "",
 }: {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  defaultName?: string;
+  defaultEmail?: string;
 }) {
-  const [form, setForm] = useState<CreateForm>(EMPTY_FORM);
+  const [form, setForm] = useState<CreateForm>({ ...EMPTY_FORM, author_name: defaultName, author_email: defaultEmail });
   const [errors, setErrors] = useState<Partial<Record<keyof CreateForm, string>>>({});
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -425,7 +433,7 @@ function CreateCaseModal({
       if (error) throw error;
 
       toast.success('Case publicado! Obrigado por contribuir com a comunidade.');
-      setForm(EMPTY_FORM);
+      setForm({ ...EMPTY_FORM, author_name: defaultName, author_email: defaultEmail });
       setImageFile(null);
       setImagePreview(null);
       onSuccess();
@@ -438,7 +446,7 @@ function CreateCaseModal({
 
   function handleClose() {
     if (loading) return;
-    setForm(EMPTY_FORM);
+    setForm({ ...EMPTY_FORM, author_name: defaultName, author_email: defaultEmail });
     setErrors({});
     setImageFile(null);
     setImagePreview(null);

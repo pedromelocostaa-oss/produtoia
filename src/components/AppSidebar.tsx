@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Home,
   BookOpen,
@@ -16,15 +16,28 @@ import {
   TrendingUp,
   Users,
   BarChart3,
+  LogOut,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function AppSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visited, setVisited] = useState<string[]>([]);
   const [mod1Open, setMod1Open] = useState(false);
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Usuário";
+  const displayEmail = user?.email ?? "";
+
+  async function handleSignOut() {
+    await signOut();
+    navigate("/login");
+  }
 
   useEffect(() => {
     const stored = localStorage.getItem("virada-visited");
@@ -143,6 +156,28 @@ export function AppSidebar() {
           <div className="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
         </div>
       </div>
+
+      {/* User info + logout */}
+      {user && (
+        <div className="px-3 pb-2">
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-muted/60 border border-border">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center shrink-0">
+              <User className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-semibold text-foreground truncate">{displayName}</p>
+              <p className="text-[10px] text-muted-foreground truncate">{displayEmail}</p>
+            </div>
+            <button
+              onClick={handleSignOut}
+              className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              title="Sair"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Diagnostic CTA */}
       <div className="px-3 pb-4">
