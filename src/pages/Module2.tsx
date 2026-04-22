@@ -22,6 +22,7 @@ interface Tool {
   what: string;
   canDo: string[];
   howToStart: HowToStep[];
+  starterPrompt?: string;
   realExample: string;
   tip: string;
 }
@@ -47,6 +48,7 @@ const tools: Tool[] = [
       { step: "2", action: "Na caixa de mensagem, escreva: 'Me ajude a escrever um e-mail profissional para [descreva sua situação]'" },
       { step: "3", action: "Leia a resposta, ajuste o que precisar e use — ou peça para ele melhorar: 'Deixe mais direto' ou 'Adicione um tom mais amigável'" },
     ],
+    starterPrompt: "Preciso escrever um e-mail para [descreva o destinatário e a situação]. O objetivo é [o que você quer alcançar]. O tom deve ser [profissional / empático / direto]. Escreva o e-mail completo.",
     realExample: "Imagina que você precisa mandar um e-mail difícil para um cliente que ficou insatisfeito com um prazo. Você não sabe como começar sem soar na defensiva. Você abre o ChatGPT, explica a situação em duas frases e pede um e-mail profissional e empático. Em menos de 1 minuto você tem o texto pronto. Você ajusta uma palavra, copia e envia. O que levaria 20 minutos de sofrimento levou 2 minutos — e ficou muito melhor do que você escreveria sozinho.",
     tip: "Comece hoje resumindo um documento que você recebeu. Cole o texto, escreva 'Resuma em 5 pontos principais' e veja o resultado. É o caso de uso mais rápido para sentir o poder da ferramenta.",
   },
@@ -70,6 +72,7 @@ const tools: Tool[] = [
       { step: "2", action: "Cole um documento, relatório ou texto que você precisa analisar — pode ser longo" },
       { step: "3", action: "Pergunte: 'Quais são os 5 pontos mais importantes aqui?' ou 'O que eu deveria prestar atenção antes de assinar?'" },
     ],
+    starterPrompt: "Você é um analista sênior da minha área. Vou te enviar um [documento / relatório / contrato] e preciso que você: (1) identifique os 5 pontos mais importantes, (2) aponte riscos ou inconsistências, (3) sugira o que devo responder ou decidir. Aqui está o conteúdo: [cole o texto]",
     realExample: "Imagina que você recebeu um contrato de 40 páginas e tem reunião com o cliente amanhã. Você não vai conseguir ler tudo com atenção. Você cola o texto no Claude e pede: 'Liste os pontos que merecem atenção e as cláusulas que podem ser problemáticas.' Em 2 minutos você tem um mapa completo do documento, com os riscos em destaque. Você chega na reunião preparado — sem ter lido linha por linha.",
     tip: "Envie um e-mail ou relatório longo que está esperando sua atenção e pergunte: 'Qual é a mensagem principal aqui e o que preciso responder ou decidir?' Você vai cortar horas de leitura.",
   },
@@ -138,6 +141,7 @@ const tools: Tool[] = [
       { step: "2", action: "Abra um e-mail longo ou um documento e clique em 'Resumir com Gemini'" },
       { step: "3", action: "Leia o resumo e peça o próximo passo: 'O que eu preciso responder aqui?' ou 'Crie um documento com os pontos principais'" },
     ],
+    starterPrompt: "Abra o Gmail ou Google Docs, clique no ícone do Gemini e escreva: 'Resuma essa conversa e me diga o que precisa de resposta urgente.' Se ainda não tem acesso, acesse gemini.google.com e pergunte: 'Crie um e-mail profissional sobre [situação].'",
     realExample: "Imagina que você chegou na segunda-feira com 47 e-mails na caixa. Com o Gemini ativo no Gmail, você seleciona as threads mais longas e pede um resumo de cada uma. Em 10 minutos você sabe o que realmente precisa de atenção, o que pode esperar e o que já foi resolvido — sem ler linha por linha. O que levaria uma hora de triagem virou 10 minutos de revisão.",
     tip: "Se você usa Google Workspace, ative o Gemini hoje. Comece pedindo para resumir o e-mail mais longo da sua caixa. Você vai economizar tempo todo dia.",
   },
@@ -227,7 +231,7 @@ const tools: Tool[] = [
       { step: "2", action: "Na galeria de templates, procure pelo nome de uma ferramenta que você usa (ex: Gmail, Sheets, Slack)" },
       { step: "3", action: "Escolha um template pronto, conecte suas contas e ative — ele roda sozinho a partir daí" },
     ],
-    realExample: "Imagina que cada vez que um lead preenche seu formulário de contato, alguém precisa copiar os dados para o CRM, mandar uma mensagem de boas-vindas e notificar o vendedor. São 3 passos manuais, feitos várias vezes por dia, por pessoas diferentes. Com o n8n, você configura esse fluxo uma vez e ele executa automaticamente para sempre. Ninguém mais precisa lembrar de fazer.",
+    realExample: "Imagina que cada vez que um lead preenche seu formulário de contato, alguém precisa abrir o formulário, copiar nome, e-mail e telefone, colar no CRM, mudar o status para 'novo', abrir o WhatsApp ou e-mail para mandar a mensagem de boas-vindas e depois avisar o vendedor responsável no Slack. São 6 cliques manuais, feitos várias vezes por dia, por pessoas que têm coisas mais importantes para fazer — e que às vezes esquecem, ou erram o dado, ou mandam a mensagem com atraso. O custo não é só de tempo: é de oportunidade perdida. Com o n8n, você configura esse fluxo uma vez — e ele executa automaticamente para sempre. Ninguém mais precisa lembrar, ninguém mais erra, nenhum lead esfria por falta de resposta rápida.",
     tip: "Escolha um processo que se repete toda semana de forma manual — muito provavelmente o n8n consegue automatizar. Comece pesquisando o template pela ferramenta que você usa: 'Gmail n8n template', 'Sheets n8n template'.",
   },
   {
@@ -249,6 +253,7 @@ const tools: Tool[] = [
       { step: "2", action: "Digite sua pergunta de forma direta: 'Quais são os principais desafios do mercado de [seu setor] em 2025?'" },
       { step: "3", action: "Leia a resposta e verifique as fontes clicando nas referências — use os dados com confiança" },
     ],
+    starterPrompt: "Quais são as principais tendências, desafios e oportunidades do mercado de [seu setor] em 2025? Traga dados atualizados e cite as fontes.",
     realExample: "Imagina que você tem uma reunião com um cliente novo em uma hora e quer chegar preparado sobre o setor dele. Você abre o Perplexity, digita o nome do setor e pede as principais tendências, desafios e oportunidades. Em 3 minutos você tem um briefing completo com fontes confiáveis citadas. Você chega na reunião parecendo que pesquisou o fim de semana todo — levou 5 minutos.",
     tip: "Antes da sua próxima reunião importante, pesquise no Perplexity sobre a empresa ou setor do cliente. Você vai impressionar com o nível de preparo — e levou só 5 minutos.",
   },
@@ -272,6 +277,7 @@ const tools: Tool[] = [
       { step: "2", action: "Crie um novo notebook e faça o upload de 1 a 5 documentos do seu trabalho (PDF, Docs, etc.)" },
       { step: "3", action: "Na caixa de chat, faça qualquer pergunta sobre os documentos que você subiu — ele responde com base no conteúdo" },
     ],
+    starterPrompt: "Suba seus documentos e pergunte: 'Quais são as principais decisões tomadas nesses documentos? O que está pendente? Quem ficou responsável por cada ação?' — adapte para os seus arquivos.",
     realExample: "Imagina que você precisa revisar 5 atas de reunião para preparar uma atualização sobre o andamento de um projeto. Normalmente você leria as 5 uma por uma para juntar as informações. Com o NotebookLM, você sobe todas as 5 e pergunta: 'Quais decisões foram tomadas? O que está atrasado? Quem ficou responsável pelo quê?' Em 2 minutos você tem o resumo completo de tudo — com referência para cada ata.",
     tip: "Suba os 3 documentos mais importantes do seu trabalho atual e faça a pergunta que você mais evita responder por preguiça de pesquisar. Você vai se surpreender com a qualidade e a precisão da resposta.",
   },
@@ -470,6 +476,20 @@ export default function Module2() {
             ))}
           </div>
         </section>
+
+        {/* Prompt para começar agora */}
+        {activeTool.starterPrompt && (
+          <section className="mb-8">
+            <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">→</span>
+              Prompt para começar agora
+            </h3>
+            <div className="rounded-xl border border-violet-500/20 bg-violet-50/50 dark:bg-violet-950/20 p-4">
+              <p className="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wider mb-2">Copie, cole e adapte</p>
+              <p className="text-sm text-foreground leading-relaxed font-mono whitespace-pre-wrap">{activeTool.starterPrompt}</p>
+            </div>
+          </section>
+        )}
 
         {/* Lovable referral card + CTA */}
         {activeTool.id === "lovable" && (

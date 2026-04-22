@@ -377,24 +377,44 @@ function InfoCard({ children, className }: { children: React.ReactNode; classNam
 
 function Intro1() {
   const examples = [
-    { icon: "📝", text: "Você faz uma pergunta → ela te dá um resumo" },
-    { icon: "📄", text: "Você dá instruções → ele redige um memorando" },
-    { icon: "📊", text: "Você fornece uma planilha → ela encontra padrões" },
-    { icon: "🖼️", text: "Você dá um comando → ele cria uma imagem" },
-    { icon: "🎯", text: "Você define um objetivo → ela descobre os passos" },
+    { icon: "📝", task: "Escrever e-mail difícil", before: "30 min pensando em cada palavra", after: "2 min revisando o rascunho da IA" },
+    { icon: "📄", task: "Resumir relatório de 50 páginas", before: "2h lendo e anotando", after: "5 min fazendo perguntas sobre ele" },
+    { icon: "📊", task: "Preparar briefing de reunião", before: "1h pesquisando o cliente", after: "10 min com Perplexity" },
+    { icon: "🖼️", task: "Criar apresentação do zero", before: "3h montando slides", after: "40 min ajustando o que a IA gerou" },
+    { icon: "🎯", task: "Montar proposta comercial", before: "Tarde inteira estruturando", after: "1h revisando e personalizando" },
   ];
   return (
     <div className="space-y-4">
+      <InfoCard className="border-amber-400/40 bg-amber-50/60 dark:bg-amber-950/20">
+        <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-2">Antes de definir, identifique</p>
+        <p className="text-foreground leading-relaxed">
+          Pensa numa tarefa que você faz toda semana e que consome mais tempo do que deveria. Provavelmente existe uma ferramenta de IA que reduz esse tempo em pelo menos 70% — sem exigir que você aprenda a programar ou entenda como ela funciona por dentro.
+        </p>
+      </InfoCard>
       <InfoCard className="border-primary/30 bg-accent">
-        <p className="text-lg font-medium text-foreground leading-relaxed">
-          "A Inteligência Artificial (IA) é um software capaz de receber uma <span className="text-primary font-semibold">entrada</span> e gerar uma <span className="text-primary font-semibold">saída</span> que normalmente exigiria esforço humano."
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          <span className="text-foreground font-semibold">O que é IA, na prática:</span> um software que recebe uma <span className="text-primary font-semibold">entrada</span> (seu pedido, documento ou dados) e gera uma <span className="text-primary font-semibold">saída</span> que antes exigia horas do seu tempo — ou de outro profissional.
         </p>
       </InfoCard>
       <div className="grid gap-3">
         {examples.map((e, i) => (
-          <InfoCard key={i} className="flex items-center gap-4 py-4">
-            <span className="text-2xl">{e.icon}</span>
-            <span className="text-muted-foreground text-sm">{e.text}</span>
+          <InfoCard key={i} className="py-3">
+            <div className="flex items-start gap-3">
+              <span className="text-xl mt-0.5">{e.icon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground mb-1.5">{e.task}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-lg bg-destructive/8 px-3 py-2">
+                    <p className="text-[10px] font-bold text-destructive uppercase tracking-wider mb-0.5">Antes</p>
+                    <p className="text-xs text-muted-foreground">{e.before}</p>
+                  </div>
+                  <div className="rounded-lg bg-green-500/8 px-3 py-2">
+                    <p className="text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wider mb-0.5">Com IA</p>
+                    <p className="text-xs text-muted-foreground">{e.after}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </InfoCard>
         ))}
       </div>
@@ -487,8 +507,17 @@ function Intro5() {
   const steps = ["Você pergunta", "Ele responde", "Você corrige", "Ele ajusta", "Você esclarece", "Melhora"];
   return (
     <div className="space-y-4">
-      <InfoCard className="border-primary/30 bg-accent text-center">
-        <p className="text-foreground font-semibold text-lg">"Pare de tratar a IA como máquina de venda automática."</p>
+      <InfoCard className="border-amber-400/40 bg-amber-50/60 dark:bg-amber-950/20">
+        <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-2">Reflexão antes de continuar</p>
+        <p className="text-sm text-foreground leading-relaxed">
+          Quando você tentou usar IA e ficou decepcionado, o problema provavelmente não foi a ferramenta — foi a expectativa. Você pediu uma vez, recebeu algo genérico e desistiu. A IA não funciona como Google: ela funciona como um colaborador que precisa de contexto e de conversas de ida e volta.
+        </p>
+      </InfoCard>
+      <InfoCard className="border-primary/30 bg-accent">
+        <p className="text-foreground font-semibold text-base mb-2">"Pare de tratar a IA como máquina de venda automática."</p>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Você não pede um relatório completo com uma frase e espera perfeição. Você conversa. Você dá contexto, pede ajustes, direciona o tom — como faria com um estagiário muito inteligente que ainda não conhece os detalhes do seu trabalho.
+        </p>
       </InfoCard>
       <InfoCard>
         <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-4">Ciclo iterativo</p>
@@ -506,7 +535,7 @@ function Intro5() {
       </InfoCard>
       <InfoCard className="bg-surface">
         <p className="text-muted-foreground text-sm leading-relaxed">
-          A IA funciona melhor quando <span className="text-primary font-semibold">sabe mais</span>. Dê contexto: seus objetivos, seu público, seu tom, suas restrições.
+          A IA funciona melhor quando <span className="text-primary font-semibold">sabe mais sobre você</span>. Dê contexto: quem você é, qual é o objetivo, para quem é o texto, qual tom você quer, o que deve evitar. Quanto mais contexto, menos você vai precisar corrigir.
         </p>
       </InfoCard>
     </div>
@@ -566,11 +595,31 @@ function Intro7() {
 
 function Intro8() {
   const risks = [
-    { title: "Absurdo confiante", desc: "Fluência não é garantia de acerto. A IA pode errar com muita convicção." },
-    { title: "Bajulação", desc: "A IA concorda demais. Peça contra-argumentos e perspectivas opostas." },
-    { title: "Capacidade de direção", desc: "Você pode induzir a resposta que queria ouvir sem perceber." },
-    { title: "Terceirização de julgamento", desc: "Não deixe os padrões de qualidade caírem silenciosamente." },
-    { title: "Vício", desc: "O ciclo de feedback é rápido e gratificante. Use com consciência." },
+    {
+      title: "A IA mente com confiança",
+      desc: "Ela pode inventar estatísticas, citar artigos que não existem ou dar datas erradas — tudo com a mesma fluência de quando está correta.",
+      fix: "Sempre verifique dados importantes em fontes primárias. Peça à IA para citar as fontes e então cheque você mesmo.",
+    },
+    {
+      title: "Ela concorda com tudo que você diz",
+      desc: "Se você apresentar uma ideia ruim com confiança, a IA vai validar. Ela não vai te contrariar por padrão — foi treinada para ser útil, não honesta ao custo do conforto.",
+      fix: "Peça explicitamente: 'Quais são as falhas nessa ideia?' ou 'Argumente contra essa decisão'. Você precisa provocar o contra-argumento.",
+    },
+    {
+      title: "Você pode estar conduzindo a resposta",
+      desc: "Se você escrever 'Concorda que X é a melhor opção?', a resposta vai confirmar X. A forma como você pergunta determina o que você recebe — e às vezes você não percebe que induziu.",
+      fix: "Faça perguntas abertas: 'Quais são as opções?' em vez de 'Isso é uma boa ideia?'. Deixe ela apresentar o leque antes de pedir sua opinião.",
+    },
+    {
+      title: "Terceirizar o julgamento sem perceber",
+      desc: "Quanto mais você usa IA para decidir, estruturar e avaliar, mais você começa a depender dela para pensar. Seu julgamento crítico atrofia silenciosamente.",
+      fix: "Use a IA para amplificar sua capacidade de análise, não para substituí-la. Você decide — ela organiza as opções e argumentos.",
+    },
+    {
+      title: "O loop de dopamina é real",
+      desc: "Cada resposta rápida, cada rascunho gerado em segundos, cada problema resolvido instantaneamente cria uma sensação de produtividade que pode virar dependência — e ansiedade quando a ferramenta não está disponível.",
+      fix: "Reserve momentos de trabalho sem IA, especialmente para problemas criativos ou estratégicos. O atrito do processo lento também gera aprendizado.",
+    },
   ];
   return (
     <div className="grid gap-3">
@@ -578,9 +627,13 @@ function Intro8() {
         <InfoCard key={i} className="border-destructive/20">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
-            <div>
+            <div className="flex-1">
               <h4 className="font-bold text-foreground text-sm mb-1">{r.title}</h4>
-              <p className="text-muted-foreground text-sm">{r.desc}</p>
+              <p className="text-muted-foreground text-sm mb-2">{r.desc}</p>
+              <div className="rounded-lg bg-green-500/8 border border-green-500/20 px-3 py-2">
+                <p className="text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wider mb-0.5">O que fazer</p>
+                <p className="text-xs text-muted-foreground">{r.fix}</p>
+              </div>
             </div>
           </div>
         </InfoCard>
