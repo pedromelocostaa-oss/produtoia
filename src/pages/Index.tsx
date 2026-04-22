@@ -121,38 +121,48 @@ export default function Index() {
       {/* Diagnóstico IA — hero card */}
       <Link
         to="/diagnostico"
-        className="block mb-6 rounded-xl overflow-hidden group animate-fade-in hover:-translate-y-0.5 transition-all duration-200"
+        className="block mb-6 rounded-2xl overflow-hidden group animate-fade-in hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-blue-950/25 hover:shadow-xl hover:shadow-blue-900/35"
         style={{ animationDelay: "140ms", opacity: 0 }}
       >
         <div
-          className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6"
-          style={{ background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #2563EB 100%)" }}
+          className="relative px-6 pt-6 pb-5"
+          style={{ background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 55%, #2563EB 100%)" }}
         >
-          <div className="w-13 h-13 rounded-xl bg-white/15 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-            <Zap className="w-7 h-7 text-white" />
+          {/* Decorative glow */}
+          <div
+            className="absolute top-0 right-0 w-56 h-56 pointer-events-none opacity-[0.12]"
+            style={{ background: "radial-gradient(circle, #93C5FD 0%, transparent 70%)", transform: "translate(35%, -35%)" }}
+          />
+
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/25 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Zap className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">
+                Diferencial exclusivo
+              </p>
+              <h3 className="text-xl font-extrabold text-white tracking-tight mb-1.5">
+                Diagnóstico IA Personalizado
+              </h3>
+              <p className="text-sm text-blue-100/80 leading-relaxed">
+                Descubra exatamente como aplicar IA no seu trabalho — plano feito para a sua área e cargo.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 bg-white text-blue-700 px-5 py-2.5 rounded-xl font-bold text-sm group-hover:shadow-lg group-hover:shadow-blue-950/30 group-hover:scale-[1.03] transition-all duration-300 shrink-0">
+              Fazer diagnóstico
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+            </div>
           </div>
-          <div className="flex-1">
-            <p className="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-1">
-              Diferencial exclusivo
-            </p>
-            <h3 className="text-xl font-extrabold text-white tracking-tight mb-1">
-              Diagnóstico IA Personalizado
-            </h3>
-            <p className="text-sm text-white/75 leading-relaxed">
-              Descubra exatamente como aplicar IA no seu trabalho — plano feito para a sua área e cargo.
-            </p>
+
+          {/* Pills — inside the gradient, no grey band */}
+          <div className="relative flex gap-2 mt-5 flex-wrap">
+            {["Personalizado por área", "Plano de ação prático", "Gerado por IA", "~5 minutos"].map((t) => (
+              <span key={t} className="text-[11px] font-semibold text-white/90 bg-white/15 border border-white/20 rounded-full px-3 py-1">
+                {t}
+              </span>
+            ))}
           </div>
-          <div className="flex items-center gap-2 bg-white text-blue-700 px-5 py-2.5 rounded-lg font-bold text-sm group-hover:shadow-md group-hover:scale-[1.02] transition-all shrink-0">
-            Fazer diagnóstico
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </div>
-        </div>
-        <div className="flex gap-2 px-6 py-3 flex-wrap" style={{ background: "rgba(0,0,0,0.18)" }}>
-          {["Personalizado por área", "Plano de ação prático", "Gerado por IA", "~5 minutos"].map((t) => (
-            <span key={t} className="text-[11px] font-semibold text-white bg-white/20 rounded-full px-3 py-1">
-              {t}
-            </span>
-          ))}
         </div>
       </Link>
 
