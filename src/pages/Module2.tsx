@@ -100,22 +100,24 @@ const tools: Tool[] = [
     name: "Claude Code",
     icon: Terminal,
     tag: "Criação de Sistemas",
-    tagline: "Crie ferramentas e automações descrevendo em português",
-    what: "O Claude Code é uma ferramenta que transforma o que você descreve em linguagem normal em sistemas, scripts, formulários e automações funcionais — sem você precisar saber programar. Você descreve o problema, ele cria a solução.",
+    tagline: "A ferramenta de IA mais adotada no mercado — e menos de 1% das empresas usa",
+    what: "O Claude Code é uma ferramenta que roda no terminal do seu computador e transforma o que você descreve em linguagem normal em sistemas, automações, scripts e integrações funcionais — sem você precisar saber programar. Mas mais do que uma ferramenta de criação, o Claude Code é uma nova forma de operar sua empresa. Em março de 2026, a SemiAnalysis publicou um artigo chamado 'Claude Code is the Inflection Point', argumentando que ele vai 'reprecificar a margem de toda empresa de informação que faz trabalho repetível'. Quem estiver na ponta certa dessa curva lucra. Quem estiver na errada fecha.",
     canDo: [
       "Criar formulários e sistemas internos sem depender do time de TI",
       "Automatizar relatórios que hoje você monta na mão toda semana",
       "Construir dashboards para acompanhar métricas do time",
       "Organizar e processar dados de planilhas automaticamente",
       "Conectar ferramentas que hoje não se conversam",
+      "Cadastrar dezenas ou centenas de registros em plataformas sem tocar no teclado",
+      "Executar tarefas repetitivas no navegador de forma completamente autônoma",
     ],
     howToStart: [
-      { step: "1", action: "Instale o Claude Code no seu computador pelo terminal (instruções em claude.ai/code)" },
-      { step: "2", action: "Abra o terminal na pasta de um projeto e descreva em português o que você quer criar" },
-      { step: "3", action: "Acompanhe o processo — ele vai perguntar, construir e testar. Você só aprova ou pede ajustes" },
+      { step: "1", action: "Instale o Claude Code: abra o terminal e execute 'npm install -g @anthropic-ai/claude-code'" },
+      { step: "2", action: "Na pasta do seu projeto, execute 'claude' — ele abre um chat direto no terminal com contexto completo do que está naquela pasta" },
+      { step: "3", action: "Descreva em português o que você quer criar ou automatizar. Ele vai perguntar, construir e testar. Você só aprova ou pede ajustes" },
     ],
-    realExample: "Imagina que todo mês você passa horas juntando dados de três planilhas diferentes para montar um relatório. O processo é sempre igual e sempre chato. Com o Claude Code, você descreve o processo em texto — 'pega os dados desta coluna, soma por categoria, destaca o que passou da meta' — e ele cria um script que faz tudo em segundos. Na próxima vez, você clica um botão e o relatório está pronto.",
-    tip: "Comece com algo pequeno: 'Crie um script que lê este arquivo CSV e me mostra um resumo das principais métricas.' Veja como funciona antes de tentar projetos maiores.",
+    realExample: "Imagina que você precisa cadastrar 70 pessoas numa plataforma. Antes disso levava horas: abrir a planilha com nome, CPF, e-mail, telefone e endereço de cada pessoa, copiar, colar no sistema, conferir. Com o Claude Code e a extensão do Chrome ativada, você descreve o processo uma única vez: 'Pega os dados da planilha e cadastra cada pessoa nessa plataforma'. Ele faz tudo sozinho — sem você precisar ficar na frente do computador, sem delegar para estagiário, sem erros de digitação.",
+    tip: "Crie um arquivo CLAUDE.md na raiz do seu projeto. Esse arquivo é o 'contrato de trabalho' do agente: descreva sua empresa, seus processos, suas regras e o tom que ele deve usar. Toda vez que ele fizer algo errado, adicione a correção nesse arquivo. Ele aprende para sempre.",
   },
   {
     id: "gemini",
@@ -536,6 +538,130 @@ export default function Module2() {
               <ArrowRight className="w-4 h-4" />
             </a>
           </section>
+        )}
+
+        {activeTool.id === "claude-code" && (
+          <>
+            {/* Bloco 1: Dado de mercado — o padrão invisível */}
+            <section className="mb-8">
+              <div className="p-6 rounded-2xl border border-border bg-card shadow-sm">
+                <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-md bg-amber-500/10 flex items-center justify-center text-xs text-amber-600 font-bold">!</span>
+                  O padrão que poucos enxergam
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Existem <strong className="text-foreground">360 milhões de empresas no mundo</strong>. Menos de 1% usa IA para gestão de verdade. E menos de <strong className="text-foreground">0,04% opera com Claude Code</strong> — uma proporção tão pequena que, quando foram gerar um gráfico para visualizar, a bolinha vermelha que representava esse grupo sequer apareceu. Foram necessárias 2.500 bolinhas para que uma delas pudesse ser vermelha.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Isso significa que qualquer pessoa que comece a usar hoje já está à frente de praticamente todo o mercado brasileiro. Não é exagero — é aritmética.
+                </p>
+              </div>
+            </section>
+
+            {/* Bloco 2: MCP — o protocolo que mudou tudo */}
+            <section className="mb-8">
+              <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">★</span>
+                MCP: o "USB-C da era da IA"
+              </h3>
+              <p className="text-muted-foreground leading-relaxed mb-5">
+                O <strong className="text-foreground">MCP (Model Context Protocol)</strong> é um protocolo criado pela Anthropic que o mercado inteiro adotou como padrão. ChatGPT adotou. Google adotou. Cursor adotou. Na prática, é um conector universal que permite ao Claude Code entrar dentro das suas plataformas e executar por você.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-5">
+                Antes, a API conectava plataforma A com plataforma B. Com MCP, a inteligência artificial conecta você com <strong className="text-foreground">todas as suas plataformas ao mesmo tempo</strong>. O Claude deixa de ser um chatbot isolado e se torna um funcionário com acesso real aos seus sistemas.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                {[
+                  "Gmail", "Google Calendar", "Google Drive", "Notion",
+                  "Slack", "Stripe", "Figma", "Canva",
+                  "Meta Ads", "n8n", "Supabase", "GitHub",
+                ].map((tool) => (
+                  <div
+                    key={tool}
+                    className="px-3 py-2 rounded-lg border border-border bg-accent text-xs font-semibold text-foreground text-center"
+                  >
+                    {tool}
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Mais de <strong>6.000 aplicativos</strong> já são plugáveis via MCP. Se a ferramenta que você usa ainda não tem integração, vai ter. E se não tiver, vai ser substituída por uma que tenha.
+              </p>
+            </section>
+
+            {/* Bloco 3: Extensão do Chrome */}
+            <section className="mb-8">
+              <div className="p-6 rounded-2xl border border-violet-200 bg-violet-50 dark:border-violet-900 dark:bg-violet-950/30">
+                <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center text-xs text-violet-600 font-bold">↗</span>
+                  Claude no Chrome: o agente que navega por você
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  A extensão do Claude para o Google Chrome transforma o navegador em um ambiente onde o Claude age — não só responde. Você descreve o que precisa fazer e ele clica, preenche, navega e executa. Como se tivesse um assistente com acesso ao seu computador.
+                </p>
+                <div className="p-4 rounded-xl border border-violet-200 bg-white dark:bg-background dark:border-violet-800 mb-4">
+                  <p className="text-sm font-semibold text-foreground mb-2">Caso real de uso:</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    "Eu precisava cadastrar mais de 70 pessoas em uma plataforma. Antes, pegava as informações da planilha — nome, CPF, e-mail, telefone, endereço — e copiava e colava campo por campo. Com o Claude no Chrome, descrevi onde ele pega os dados e como ele faz o cadastro. Depois disso, ele fez tudo sozinho. Não precisei gastar horas fazendo isso ou destinar meu estagiário para a tarefa."
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Disponível em <strong>claude.ai</strong> → instale a extensão no Chrome e conecte com sua conta.
+                </p>
+              </div>
+            </section>
+
+            {/* Bloco 4: Cases reais */}
+            <section className="mb-8">
+              <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-emerald-500/10 flex items-center justify-center text-xs text-emerald-600 font-bold">✓</span>
+                Quem já está usando — e o que aconteceu
+              </h3>
+              <div className="space-y-4">
+                <div className="p-5 rounded-xl border border-border bg-card hover:border-violet-500/20 hover:shadow-sm transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center shrink-0 text-sm font-bold text-violet-700">J</div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground mb-1">Jaana Dogan — engenheira ex-Google</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Entregou ao Claude Code três parágrafos descrevendo um problema que o time dela trabalhou por <strong className="text-foreground">um ano inteiro</strong>. O Claude construiu o protótipo funcional <strong className="text-foreground">em uma hora</strong>. A frase dela: "Um ano contra uma hora."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 rounded-xl border border-border bg-card hover:border-violet-500/20 hover:shadow-sm transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0 text-sm font-bold text-blue-700">E</div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground mb-1">Epic Systems — o software que está em 1 de cada 3 hospitais dos EUA</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                        A Epic é uma das maiores empresas de software médico do mundo. Seu sistema, o MyChart, está presente em <strong className="text-foreground">mais de um terço de todos os hospitais dos Estados Unidos</strong> — são centenas de milhões de registros de pacientes gerenciados por eles.
+                      </p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        A Epic revelou que <strong className="text-foreground">mais da metade do uso interno de Claude Code vem de áreas que não são de desenvolvimento</strong>: marketing, operações, produto, área clínica. Metade do uso não é de dev. Isso quebra o mito de que Claude Code é "só para programadores".
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Bloco 5: CLAUDE.md — o contrato de trabalho */}
+            <section className="mb-8">
+              <div className="p-6 rounded-2xl border border-border bg-card">
+                <h3 className="text-base font-bold text-foreground mb-3">
+                  O arquivo CLAUDE.md: o contrato de trabalho do agente
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Crie um arquivo chamado <code className="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">CLAUDE.md</code> na raiz do seu projeto. Esse arquivo é onde você descreve sua empresa, seus produtos, suas regras, seu tom de voz e suas integrações. Toda vez que o Claude fizer algo errado, você adiciona a correção lá — e ele nunca mais erra da mesma forma.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Boris Cherny, o engenheiro por trás do Claude Code, compartilha um único <code className="font-mono">CLAUDE.md</code> com todo o time — é o guia operacional do agente para aquele contexto.
+                </p>
+              </div>
+            </section>
+          </>
         )}
 
         {/* Transcrição — three sub-tools breakdown */}
