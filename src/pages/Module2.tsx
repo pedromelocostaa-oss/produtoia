@@ -626,21 +626,6 @@ export default function Module2() {
                 </div>
               </div>
             </section>
-
-            {/* Bloco 5: CLAUDE.md — o contrato de trabalho */}
-            <section className="mb-8">
-              <div className="p-6 rounded-2xl border border-border bg-card">
-                <h3 className="text-base font-bold text-foreground mb-3">
-                  O arquivo CLAUDE.md: o contrato de trabalho do agente
-                </h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Crie um arquivo chamado <code className="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">CLAUDE.md</code> na raiz do seu projeto. Esse arquivo é onde você descreve sua empresa, seus produtos, suas regras, seu tom de voz e suas integrações. Toda vez que o Claude fizer algo errado, você adiciona a correção lá — e ele nunca mais erra da mesma forma.
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Boris Cherny, o engenheiro por trás do Claude Code, compartilha um único <code className="font-mono">CLAUDE.md</code> com todo o time — é o guia operacional do agente para aquele contexto.
-                </p>
-              </div>
-            </section>
           </>
         )}
 
