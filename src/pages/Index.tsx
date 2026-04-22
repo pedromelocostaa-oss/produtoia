@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, Wrench, Target, MessageSquare, Zap, ArrowRight, CheckCircle2, Users, BarChart3, Clock, Sparkles } from "lucide-react";
+import { BookOpen, Wrench, Target, MessageSquare, Zap, ArrowRight, CheckCircle2, BarChart3, Clock, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const modules = [
@@ -10,7 +10,6 @@ const modules = [
     icon: BookOpen,
     path: "/modulo-1",
     key: "modulo-1",
-    accent: "blue",
     accentClass: "bg-blue-500/10 text-blue-600",
     borderClass: "hover:border-blue-500/20",
   },
@@ -21,9 +20,8 @@ const modules = [
     icon: Wrench,
     path: "/modulo-2",
     key: "modulo-2",
-    accent: "violet",
-    accentClass: "bg-violet-500/10 text-violet-600",
-    borderClass: "hover:border-violet-500/20",
+    accentClass: "bg-blue-500/10 text-blue-600",
+    borderClass: "hover:border-blue-500/20",
   },
   {
     title: "Módulo 3",
@@ -32,9 +30,8 @@ const modules = [
     icon: Target,
     path: "/modulo-3",
     key: "modulo-3",
-    accent: "emerald",
-    accentClass: "bg-emerald-500/10 text-emerald-600",
-    borderClass: "hover:border-emerald-500/20",
+    accentClass: "bg-blue-500/10 text-blue-600",
+    borderClass: "hover:border-blue-500/20",
   },
   {
     title: "Módulo 4",
@@ -43,9 +40,8 @@ const modules = [
     icon: MessageSquare,
     path: "/modulo-4",
     key: "modulo-4",
-    accent: "orange",
-    accentClass: "bg-orange-500/10 text-orange-500",
-    borderClass: "hover:border-orange-500/20",
+    accentClass: "bg-blue-500/10 text-blue-600",
+    borderClass: "hover:border-blue-500/20",
   },
 ];
 
@@ -76,7 +72,7 @@ export default function Index() {
         </div>
         <div className="w-full h-2.5 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full transition-all duration-700 ease-out"
+            className="h-full bg-blue-600 rounded-full transition-all duration-700 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -91,11 +87,8 @@ export default function Index() {
 
       {/* Welcome */}
       <div className="mb-8 animate-fade-in" style={{ animationDelay: "100ms", opacity: 0 }}>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          Bem-vindo ao{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-            Virada Profissional.
-          </span>
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
+          Bem-vindo ao Virada Profissional.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
           Em 4 módulos você vai dominar as ferramentas de IA que os profissionais mais requisitados já usam no dia a dia.
@@ -124,6 +117,44 @@ export default function Index() {
           ))}
         </div>
       </div>
+
+      {/* Diagnóstico IA — hero card */}
+      <Link
+        to="/diagnostico"
+        className="block mb-6 rounded-xl overflow-hidden group animate-fade-in hover:-translate-y-0.5 transition-all duration-200"
+        style={{ animationDelay: "140ms", opacity: 0 }}
+      >
+        <div
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6"
+          style={{ background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #2563EB 100%)" }}
+        >
+          <div className="w-13 h-13 rounded-xl bg-white/15 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+            <Zap className="w-7 h-7 text-white" />
+          </div>
+          <div className="flex-1">
+            <p className="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-1">
+              Diferencial exclusivo
+            </p>
+            <h3 className="text-xl font-extrabold text-white tracking-tight mb-1">
+              Diagnóstico IA Personalizado
+            </h3>
+            <p className="text-sm text-white/75 leading-relaxed">
+              Descubra exatamente como aplicar IA no seu trabalho — plano feito para a sua área e cargo.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-white text-blue-700 px-5 py-2.5 rounded-lg font-bold text-sm group-hover:shadow-md group-hover:scale-[1.02] transition-all shrink-0">
+            Fazer diagnóstico
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </div>
+        </div>
+        <div className="flex gap-2 px-6 py-3 flex-wrap" style={{ background: "rgba(0,0,0,0.18)" }}>
+          {["Personalizado por área", "Plano de ação prático", "Gerado por IA", "~5 minutos"].map((t) => (
+            <span key={t} className="text-[11px] font-semibold text-white bg-white/20 rounded-full px-3 py-1">
+              {t}
+            </span>
+          ))}
+        </div>
+      </Link>
 
       {/* Quick action: Continue where you left off */}
       {nextModule && visited.length > 0 && (
@@ -164,7 +195,7 @@ export default function Index() {
                   <mod.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className={`text-xs font-semibold uppercase tracking-wider mb-1 ${mod.accentClass.split(" ")[1]}`}>
+                  <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
                     {mod.title}
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{mod.subtitle}</h3>
@@ -175,71 +206,6 @@ export default function Index() {
           );
         })}
       </div>
-
-      {/* Comparison CTA */}
-      <Link
-        to="/comparativo"
-        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 mb-4 rounded-xl border border-purple-200 bg-purple-50 hover:bg-purple-100 hover:border-purple-300 transition-all group animate-fade-in"
-        style={{ animationDelay: "480ms", opacity: 0 }}
-      >
-        <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-          <BarChart3 className="w-6 h-6 text-purple-600" />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-foreground">Qual IA Usar para Cada Tarefa?</h3>
-            <span className="text-[9px] font-bold bg-purple-600 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">Novo</span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Pare de adivinhar — veja o comparativo completo de quando usar Claude, ChatGPT, Perplexity e mais.
-          </p>
-        </div>
-        <ArrowRight className="w-4 h-4 text-purple-500 group-hover:translate-x-1 transition-transform shrink-0" />
-      </Link>
-
-      {/* Community CTA */}
-      <Link
-        to="/comunidade"
-        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 mb-4 rounded-xl border border-border bg-card hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5 transition-all group animate-fade-in"
-        style={{ animationDelay: "530ms", opacity: 0 }}
-      >
-        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-          <Users className="w-6 h-6 text-primary" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-semibold text-foreground mb-1">Veja o que outros profissionais já construíram</h3>
-          <p className="text-sm text-muted-foreground">
-            Inspire-se com cases reais de quem já colocou a IA para trabalhar
-          </p>
-        </div>
-        <div className="flex items-center gap-1 text-sm font-semibold text-primary group-hover:gap-2 transition-all shrink-0">
-          Acessar a Comunidade
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-        </div>
-      </Link>
-
-      {/* Diagnostic CTA */}
-      <Link
-        to="/diagnostico"
-        className="block p-6 sm:p-8 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-white hover:opacity-95 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 group animate-fade-in"
-        style={{ animationDelay: "550ms", opacity: 0 }}
-      >
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="w-14 h-14 rounded-xl bg-white/15 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-            <Zap className="w-7 h-7" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold mb-1">Faça seu Diagnóstico IA</h3>
-            <p className="text-white/80 text-sm">
-              Descubra exatamente como aplicar IA no seu trabalho — personalizado para você.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 bg-white text-blue-700 px-5 py-2.5 rounded-lg font-semibold text-sm group-hover:shadow-md group-hover:scale-[1.02] transition-all shrink-0">
-            Fazer meu diagnóstico agora
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </div>
-        </div>
-      </Link>
     </div>
   );
 }

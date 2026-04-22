@@ -72,10 +72,36 @@ export function AppSidebar() {
 
       <div className="h-px bg-border mx-4" />
 
+      {/* Diagnóstico IA — slot destacado */}
+      <div className="px-3 py-3">
+        <Link
+          to="/diagnostico"
+          onClick={close}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 hover:scale-[0.99]"
+          style={{
+            background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #2563EB 100%)",
+            boxShadow: "0 2px 8px rgba(37,99,235,0.25)",
+          }}
+        >
+          <Zap className="w-4 h-4 shrink-0" />
+          <span className="flex-1">Diagnóstico IA</span>
+          <span className="text-[9px] font-bold bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
+            Novo
+          </span>
+        </Link>
+      </div>
+
+      <div className="h-px bg-border mx-4" />
+
       {/* Nav */}
-      <nav className="flex-1 px-3 pt-4 pb-2 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-3 pt-3 pb-2 space-y-0.5 overflow-y-auto">
         {/* Início */}
         <NavItem icon={Home} label="Início" path="/" active={isActive("/")} onClick={close} />
+
+        {/* Jornada de Aprendizado */}
+        <p className="px-3 pt-3 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+          Jornada de Aprendizado
+        </p>
 
         {/* Módulo 1 — expandable */}
         <div>
@@ -111,37 +137,24 @@ export function AppSidebar() {
         {/* Módulo 4 */}
         <NavItem icon={MessageSquare} label="Módulo 4 — Prompts Prontos" path="/modulo-4" active={isActive("/modulo-4")} onClick={close} badge={<StatusBadge visited={visited.includes("modulo-4")} />} />
 
-        {/* Qual IA Usar? — Comparison page */}
-        <NavItem
-          icon={BarChart3}
-          label="Qual IA Usar?"
-          path="/comparativo"
-          active={isActive("/comparativo")}
-          onClick={close}
-          badge={
-            <span className="text-[9px] font-bold bg-purple-600 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
-              Novo
-            </span>
-          }
-        />
+        {/* Explorar */}
+        <div className="h-px bg-border my-1.5" />
+        <p className="px-3 pt-2 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+          Explorar
+        </p>
 
-        {/* Comunidade */}
-        <NavItem
-          icon={Users}
-          label="Comunidade"
-          path="/comunidade"
-          active={isActive("/comunidade")}
-          onClick={close}
-          badge={
-            <span className="text-[9px] font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0">
-              Novo
-            </span>
-          }
-        />
+        {/* Qual IA Usar? — sem badge */}
+        <NavItem icon={BarChart3} label="Qual IA Usar?" path="/comparativo" active={isActive("/comparativo")} onClick={close} />
 
-        <div className="h-px bg-border my-2" />
+        {/* Comunidade — sem badge "Novo" */}
+        <NavItem icon={Users} label="Comunidade" path="/comunidade" active={isActive("/comunidade")} onClick={close} />
 
-        {/* Extras */}
+        {/* Ferramentas */}
+        <div className="h-px bg-border my-1.5" />
+        <p className="px-3 pt-2 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+          Ferramentas
+        </p>
+
         <NavItem icon={Lightbulb} label="Dicas de Conteúdo" path="/dicas-de-conteudo" active={isActive("/dicas-de-conteudo")} onClick={close} />
         <NavItem icon={Share2} label="Guia Social Media" path="/social-media" active={isActive("/social-media")} onClick={close} />
       </nav>
@@ -153,7 +166,7 @@ export function AppSidebar() {
           <span className="font-bold tabular-nums">{visited.length}/4</span>
         </div>
         <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
+          <div className="h-full bg-blue-600 rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
         </div>
       </div>
 
@@ -161,7 +174,7 @@ export function AppSidebar() {
       {user && (
         <div className="px-3 pb-2">
           <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-muted/60 border border-border">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shrink-0">
               <User className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
@@ -178,21 +191,6 @@ export function AppSidebar() {
           </div>
         </div>
       )}
-
-      {/* Diagnostic CTA */}
-      <div className="px-3 pb-4">
-        <Link
-          to="/diagnostico"
-          onClick={close}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 shadow-md hover:shadow-lg transition-all"
-        >
-          <Zap className="w-4.5 h-4.5 shrink-0" />
-          <span className="flex-1">Diagnóstico IA</span>
-          <span className="text-[9px] font-bold bg-primary-foreground/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
-            Novo
-          </span>
-        </Link>
-      </div>
     </div>
   );
 

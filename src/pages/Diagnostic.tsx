@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Zap, ClipboardList, Sparkles, Send, ArrowLeft, Loader2, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,6 +14,36 @@ const setores = ["Tecnologia / SaaS", "Varejo / E-commerce", "Serviços Financei
 const cargos = ["Analista", "Coordenador", "Gerente", "Diretor", "VP / C-Level", "Fundador / Sócio"];
 const tamanhos = ["1-10 pessoas", "11-50 pessoas", "51-200 pessoas", "201-1000 pessoas", "1000+ pessoas"];
 
+function ChipGroup({
+  options,
+  value,
+  onChange,
+}: {
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => onChange(value === opt ? "" : opt)}
+          className={
+            "px-3.5 py-2 rounded-full border text-sm transition-all " +
+            (value === opt
+              ? "border-primary bg-accent text-primary font-semibold"
+              : "border-border bg-background text-foreground hover:border-primary/40 hover:bg-accent/50")
+          }
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function Diagnostic() {
   const [area, setArea] = useState("");
   const [setor, setSetor] = useState("");
@@ -26,6 +56,7 @@ export default function Diagnostic() {
   const resultRef = useRef<HTMLDivElement>(null);
 
   const canSubmit = area && setor && cargo && tamanho && descricao.trim().length > 10;
+  const step = area && setor ? (cargo && tamanho ? 3 : 2) : 1;
 
   const handleSubmit = async () => {
     if (!canSubmit || loading) return;
@@ -51,7 +82,6 @@ export default function Diagnostic() {
 
       if (!resp.body) throw new Error("Streaming não suportado.");
 
-      // Scroll to result area
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 200);
 
       const reader = resp.body.getReader();
@@ -91,7 +121,6 @@ export default function Diagnostic() {
         }
       }
 
-      // Final flush
       if (textBuffer.trim()) {
         for (let raw of textBuffer.split("\n")) {
           if (!raw) continue;
@@ -111,7 +140,6 @@ export default function Diagnostic() {
         }
       }
 
-      // Save diagnostic to database
       if (fullText) {
         supabase.from("diagnostics").insert({
           area, setor, cargo, tamanho, descricao, resultado: fullText,
@@ -130,8 +158,6 @@ export default function Diagnostic() {
     setResult("");
     setError("");
   };
-
-  const selectClass = "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow";
 
   return (
     <div>
@@ -152,6 +178,16 @@ export default function Diagnostic() {
             <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto animate-fade-in" style={{ animationDelay: "200ms", opacity: 0 }}>
               Seu plano personalizado de IA. Para a sua área. Para o seu dia a dia.
             </p>
+            <div className="flex items-center justify-center gap-2 mt-4 flex-wrap animate-fade-in" style={{ animationDelay: "300ms", opacity: 0 }}>
+              {["~5 minutos", "Gerado por IA", "Gratuito"].map((t) => (
+                <span
+                  key={t}
+                  className="text-[11px] font-semibold text-primary-foreground/80 bg-primary-foreground/15 rounded-full px-3 py-1"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -174,39 +210,48 @@ export default function Diagnostic() {
         {/* Form */}
         {!result && (
           <div className="rounded-xl border border-border bg-card p-6 sm:p-8 animate-fade-in" style={{ animationDelay: "600ms", opacity: 0 }}>
+            {/* Step progress */}
+            <div className="flex items-center gap-2 mb-6">
+              {([["1", "Perfil"], ["2", "Contexto"], ["3", "Enviar"]] as [string, string][]).map(([n, label], i) => {
+                const done = step > i + 1;
+                const active = step === i + 1;
+                return (
+                  <React.Fragment key={n}>
+                    {i > 0 && <div className={"flex-1 h-0.5 " + (step > i ? "bg-primary" : "bg-border")} />}
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className={"w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all " + (done ? "bg-primary border-primary text-primary-foreground" : active ? "border-foreground text-foreground" : "border-border text-muted-foreground")}>
+                        {done ? "✓" : n}
+                      </div>
+                      <span className={"text-xs font-medium " + (active || done ? "text-foreground" : "text-muted-foreground")}>
+                        {label}
+                      </span>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+
             <h2 className="text-xl font-bold text-foreground mb-6">Conte sobre seu trabalho</h2>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Área de atuação</label>
-                <select className={selectClass} value={area} onChange={(e) => setArea(e.target.value)}>
-                  <option value="">Selecione sua área</option>
-                  {areas.map((a) => <option key={a} value={a}>{a}</option>)}
-                </select>
+                <label className="block text-sm font-medium text-foreground mb-2">Área de atuação</label>
+                <ChipGroup options={areas} value={area} onChange={setArea} />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Setor da empresa</label>
-                <select className={selectClass} value={setor} onChange={(e) => setSetor(e.target.value)}>
-                  <option value="">Selecione o setor</option>
-                  {setores.map((s) => <option key={s} value={s}>{s}</option>)}
-                </select>
+                <label className="block text-sm font-medium text-foreground mb-2">Setor da empresa</label>
+                <ChipGroup options={setores} value={setor} onChange={setSetor} />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Cargo</label>
-                <select className={selectClass} value={cargo} onChange={(e) => setCargo(e.target.value)}>
-                  <option value="">Selecione seu cargo</option>
-                  {cargos.map((c) => <option key={c} value={c}>{c}</option>)}
-                </select>
+                <label className="block text-sm font-medium text-foreground mb-2">Cargo</label>
+                <ChipGroup options={cargos} value={cargo} onChange={setCargo} />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Tamanho da empresa</label>
-                <select className={selectClass} value={tamanho} onChange={(e) => setTamanho(e.target.value)}>
-                  <option value="">Selecione o tamanho</option>
-                  {tamanhos.map((t) => <option key={t} value={t}>{t}</option>)}
-                </select>
+                <label className="block text-sm font-medium text-foreground mb-2">Tamanho da empresa</label>
+                <ChipGroup options={tamanhos} value={tamanho} onChange={setTamanho} />
               </div>
 
               <div>
@@ -229,7 +274,7 @@ export default function Diagnostic() {
                 <button
                   onClick={handleSubmit}
                   disabled={!canSubmit || loading}
-                  className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -285,7 +330,6 @@ export default function Diagnostic() {
   );
 }
 
-// Simple markdown renderer
 function MarkdownRenderer({ content }: { content: string }) {
   const lines = content.split("\n");
   const elements: JSX.Element[] = [];
@@ -326,7 +370,6 @@ function MarkdownRenderer({ content }: { content: string }) {
 }
 
 function InlineFormat({ text }: { text: string }) {
-  // Handle **bold** and `code`
   const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
   return (
     <>
