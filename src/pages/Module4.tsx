@@ -15,7 +15,7 @@ interface Prompt {
 const areaColors: Record<string, string> = {
   Vendas: "bg-primary/10 text-primary",
   CS: "bg-emerald-500/10 text-emerald-600",
-  Marketing: "bg-violet-500/10 text-violet-600",
+  Marketing: "bg-violet-500/10 text-blue-600",
   Operações: "bg-amber-500/10 text-amber-600",
   Jurídico: "bg-destructive/10 text-destructive",
   Financeiro: "bg-yellow-500/10 text-yellow-700",
@@ -364,8 +364,8 @@ export default function Module4() {
 
       {/* Header */}
       <div className="mb-6 animate-fade-in" style={{ animationDelay: "50ms", opacity: 0 }}>
-        <div className="text-xs font-semibold text-orange-500 uppercase tracking-wider mb-2">Módulo 4</div>
-        <h1 className="text-3xl font-bold tracking-tight mb-3 bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+        <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-2">Módulo 4</div>
+        <h1 className="text-3xl font-bold tracking-tight mb-3 bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
           Prompts Prontos
         </h1>
         <p className="text-lg text-muted-foreground">
@@ -394,7 +394,7 @@ export default function Module4() {
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200",
               filter === opt
-                ? "bg-orange-500 text-white shadow-sm scale-105"
+                ? "bg-blue-600 text-white shadow-sm scale-105"
                 : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
             )}
           >
@@ -468,7 +468,7 @@ export default function Module4() {
       {filtered.length === 0 && (
         <div className="text-center py-12">
           <p className="text-muted-foreground">Nenhum prompt encontrado para esta busca.</p>
-          <button onClick={() => { setFilter("Todos"); setSearchQuery(""); }} className="mt-2 text-sm text-orange-500 hover:underline">
+          <button onClick={() => { setFilter("Todos"); setSearchQuery(""); }} className="mt-2 text-sm text-blue-600 hover:underline">
             Limpar filtros
           </button>
         </div>
@@ -485,7 +485,7 @@ export default function Module4() {
         </Link>
         <Link
           to="/diagnostico"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 hover:shadow-md transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm hover:bg-blue-700 hover:shadow-md transition-all"
         >
           Diagnóstico IA
           <ArrowRight className="w-4 h-4" />
@@ -509,7 +509,7 @@ function PromptCard({ prompt: p, idx, copiedIdx, expandedIdx, onCopy, onToggle, 
   const isExpanded = expandedIdx === idx;
   return (
     <div
-      className="rounded-xl border border-border bg-card hover:border-orange-500/20 hover:shadow-sm transition-all duration-200 animate-fade-in overflow-hidden"
+      className="rounded-xl border border-border bg-card hover:border-blue-500/20 hover:shadow-sm transition-all duration-200 animate-fade-in overflow-hidden"
       style={{ animationDelay: `${delay}ms`, opacity: 0 }}
     >
       {/* Card header */}
@@ -536,7 +536,7 @@ function PromptCard({ prompt: p, idx, copiedIdx, expandedIdx, onCopy, onToggle, 
                 "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
                 copiedIdx === idx
                   ? "bg-emerald-500/10 text-emerald-600"
-                  : "bg-orange-500 text-white hover:bg-orange-600 hover:shadow-sm"
+                  : "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-sm"
               )}
             >
               {copiedIdx === idx ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -557,7 +557,7 @@ function PromptCard({ prompt: p, idx, copiedIdx, expandedIdx, onCopy, onToggle, 
           {/* Por que funciona */}
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Por que funciona</span>
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Por que funciona</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">{p.porqueFunciona}</p>
           </div>
@@ -565,9 +565,9 @@ function PromptCard({ prompt: p, idx, copiedIdx, expandedIdx, onCopy, onToggle, 
           {/* Exemplo de output */}
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-xs font-bold text-violet-600 uppercase tracking-wider">Exemplo de output</span>
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Exemplo de output</span>
             </div>
-            <div className="p-3 rounded-lg border border-violet-200 bg-violet-50 text-sm text-foreground leading-relaxed italic">
+            <div className="p-3 rounded-lg border border-blue-200 bg-blue-50 text-sm text-foreground leading-relaxed italic">
               {p.exemploOutput}
             </div>
           </div>
