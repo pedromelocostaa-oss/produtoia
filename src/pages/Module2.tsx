@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   MessageSquare, Brain, Users, Terminal, Search, Laptop,
   Heart, MousePointerClick, Workflow, Globe, BookOpenCheck,
-  ArrowRight, ArrowLeft, ChevronDown, Zap, CheckCircle2, Mic,
+  ArrowRight, ArrowLeft, Zap, CheckCircle2, Mic,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getToolLogo } from "@/components/ToolLogos";
@@ -301,9 +301,7 @@ const tools: Tool[] = [
 
 export default function Module2() {
   const [activeToolId, setActiveToolId] = useState(tools[0].id);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [animKey, setAnimKey] = useState(0);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const activeTool = tools.find((t) => t.id === activeToolId)!;
   const currentIdx = tools.findIndex((t) => t.id === activeToolId);
@@ -319,20 +317,9 @@ export default function Module2() {
     }
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const goToTool = (id: string) => {
     setActiveToolId(id);
     setAnimKey((k) => k + 1);
-    setDropdownOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -360,65 +347,21 @@ export default function Module2() {
         </p>
       </div>
 
-      {/* Progress bar + dropdown selector */}
+      {/* Progress bar */}
       <div
-        className="flex items-center gap-3 mb-6 animate-fade-in"
+        className="mb-6 animate-fade-in"
         style={{ animationDelay: "80ms", opacity: 0 }}
       >
-        {/* Progress bar */}
-        <div className="flex-1">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-xs text-muted-foreground font-medium">
-              Ferramenta {currentIdx + 1} de {tools.length}
-            </span>
-          </div>
-          <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-violet-500 rounded-full transition-all duration-500"
-              style={{ width: `${((currentIdx + 1) / tools.length) * 100}%` }}
-            />
-          </div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs text-muted-foreground font-medium">
+            Ferramenta {currentIdx + 1} de {tools.length}
+          </span>
         </div>
-
-        {/* Dropdown selector */}
-        <div className="relative shrink-0" ref={dropdownRef}>
-          <button
-            onClick={() => setDropdownOpen((o) => !o)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-card text-sm font-medium text-foreground hover:bg-muted transition-colors"
-          >
-            <span className="hidden sm:block">Navegar</span>
-            <ChevronDown
-              className={cn("w-4 h-4 text-muted-foreground transition-transform duration-200", dropdownOpen && "rotate-180")}
-            />
-          </button>
-
-          {dropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-64 bg-card border border-border rounded-xl shadow-lg z-50 overflow-hidden animate-scale-in">
-              <div className="p-2 max-h-80 overflow-y-auto">
-                {tools.map((tool, i) => (
-                  <button
-                    key={tool.id}
-                    onClick={() => goToTool(tool.id)}
-                    className={cn(
-                      "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-left transition-colors",
-                      tool.id === activeToolId
-                        ? "bg-violet-600 text-white"
-                        : "text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <span className="text-[10px] text-muted-foreground w-4 shrink-0 font-mono">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <tool.icon className={cn("w-3.5 h-3.5 shrink-0", tool.id === activeToolId ? "text-white" : "text-muted-foreground")} />
-                    <span className="font-medium truncate">{tool.name}</span>
-                    {tool.id === activeToolId && (
-                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 ml-auto text-white" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+          <div
+            className="h-full bg-violet-500 rounded-full transition-all duration-500"
+            style={{ width: `${((currentIdx + 1) / tools.length) * 100}%` }}
+          />
         </div>
       </div>
 
@@ -429,19 +372,36 @@ export default function Module2() {
       >
         {tools.map((tool) => {
           const Logo = getToolLogo(tool.id);
+          const isClaude = tool.id === "claude";
+          const isActive = activeToolId === tool.id;
           return (
             <button
               key={tool.id}
               onClick={() => goToTool(tool.id)}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200",
-                activeToolId === tool.id
-                  ? "bg-violet-600 text-white shadow-sm shadow-violet-200"
-                  : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                "flex items-center gap-1.5 rounded-lg font-semibold transition-all duration-200",
+                isClaude
+                  ? cn(
+                      "px-4 py-2 text-sm ring-2 ring-offset-1",
+                      isActive
+                        ? "bg-violet-600 text-white shadow-md shadow-violet-300/40 ring-violet-400"
+                        : "bg-violet-50 text-violet-700 hover:bg-violet-100 ring-violet-300 dark:bg-violet-950/40 dark:text-violet-300 dark:ring-violet-800 dark:hover:bg-violet-900/50"
+                    )
+                  : cn(
+                      "px-3 py-1.5 text-xs",
+                      isActive
+                        ? "bg-violet-600 text-white shadow-sm shadow-violet-200"
+                        : "bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                    )
               )}
             >
-              {Logo && <Logo className="w-3.5 h-3.5" />}
+              {Logo && <Logo className={isClaude ? "w-4 h-4" : "w-3.5 h-3.5"} />}
               {tool.name}
+              {isClaude && !isActive && (
+                <span className="ml-1 text-[9px] font-bold bg-violet-200 text-violet-700 px-1.5 py-0.5 rounded-full uppercase tracking-wider dark:bg-violet-800 dark:text-violet-200">
+                  Principal
+                </span>
+              )}
             </button>
           );
         })}
@@ -540,7 +500,7 @@ export default function Module2() {
           </section>
         )}
 
-        {activeTool.id === "claude-code" && (
+        {activeTool.id === "claude" && (
           <>
             {/* Bloco 1: Dado de mercado — o padrão invisível */}
             <section className="mb-8">
