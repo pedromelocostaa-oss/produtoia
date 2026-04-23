@@ -18,6 +18,7 @@ import {
   BarChart3,
   LogOut,
   User,
+  Lock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -72,27 +73,6 @@ export function AppSidebar() {
 
       <div className="h-px bg-border mx-4" />
 
-      {/* Diagnóstico IA — slot destacado */}
-      <div className="px-3 py-3">
-        <Link
-          to="/diagnostico"
-          onClick={close}
-          className="flex items-center gap-3 px-4 py-3 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 hover:scale-[0.99]"
-          style={{
-            background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #2563EB 100%)",
-            boxShadow: "0 2px 8px rgba(37,99,235,0.25)",
-          }}
-        >
-          <Zap className="w-4 h-4 shrink-0" />
-          <span className="flex-1">Diagnóstico IA</span>
-          <span className="text-[9px] font-bold bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
-            Novo
-          </span>
-        </Link>
-      </div>
-
-      <div className="h-px bg-border mx-4" />
-
       {/* Nav */}
       <nav className="flex-1 px-3 pt-3 pb-2 space-y-0.5 overflow-y-auto">
         {/* Início */}
@@ -137,6 +117,33 @@ export function AppSidebar() {
         {/* Módulo 4 */}
         <NavItem icon={MessageSquare} label="Módulo 4 — Prompts Prontos" path="/modulo-4" active={isActive("/modulo-4")} onClick={close} badge={<StatusBadge visited={visited.includes("modulo-4")} />} />
 
+        {/* Diagnóstico IA — liberado ao completar os 4 módulos */}
+        {visited.length === 4 ? (
+          <Link
+            to="/diagnostico"
+            onClick={close}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 hover:scale-[0.99] mt-1"
+            style={{
+              background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #2563EB 100%)",
+              boxShadow: "0 2px 8px rgba(37,99,235,0.25)",
+            }}
+          >
+            <Zap className="w-4 h-4 shrink-0" />
+            <span className="flex-1">Diagnóstico IA</span>
+            <span className="text-[9px] font-bold bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">
+              Liberado
+            </span>
+          </Link>
+        ) : (
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg mt-1 cursor-not-allowed opacity-50">
+            <Lock className="w-4 h-4 shrink-0 text-muted-foreground" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-medium text-muted-foreground truncate">Diagnóstico IA</p>
+              <p className="text-[10px] text-muted-foreground/70 leading-tight">Complete os 4 módulos para liberar</p>
+            </div>
+          </div>
+        )}
+
         {/* Explorar */}
         <div className="h-px bg-border my-1.5" />
         <p className="px-3 pt-2 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
@@ -168,6 +175,11 @@ export function AppSidebar() {
         <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
           <div className="h-full bg-blue-600 rounded-full transition-all duration-500" style={{ width: `${(visited.length / 4) * 100}%` }} />
         </div>
+        <p className="text-[10px] text-muted-foreground mt-1.5">
+          {visited.length === 4
+            ? "Diagnóstico IA liberado! 🎉"
+            : "Complete todos os módulos para liberar o Diagnóstico IA"}
+        </p>
       </div>
 
       {/* User info + logout */}
