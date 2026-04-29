@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Share2,
   Lightbulb,
+  MessageSquarePlus,
   ChevronRight,
   Brain,
   TrendingUp,
@@ -164,6 +165,10 @@ export function AppSidebar() {
 
         <NavItem icon={Lightbulb} label="Dicas de Conteúdo" path="/dicas-de-conteudo" active={isActive("/dicas-de-conteudo")} onClick={close} />
         <NavItem icon={Share2} label="Guia Social Media" path="/social-media" active={isActive("/social-media")} onClick={close} />
+
+        {/* Feedback */}
+        <div className="h-px bg-border my-1.5" />
+        <NavItem icon={MessageSquarePlus} label="Deixar Feedback" path="/feedback" active={isActive("/feedback")} onClick={close} />
       </nav>
 
       {/* Progress */}

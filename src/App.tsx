@@ -15,6 +15,7 @@ import SocialMedia from "./pages/SocialMedia";
 import Diagnostic from "./pages/Diagnostic";
 import ContentTips from "./pages/ContentTips";
 import Community from "./pages/Community";
+import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="/diagnostico" element={<Diagnostic />} />
               <Route path="/dicas-de-conteudo" element={<ContentTips />} />
               <Route path="/comunidade" element={<Community />} />
+              <Route path="/feedback" element={<Feedback />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
